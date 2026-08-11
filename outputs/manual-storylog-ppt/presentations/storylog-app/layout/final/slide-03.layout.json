@@ -1,0 +1,1322 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/uzwi8l",
+    "id": "uzwi8l",
+    "slide": 3,
+    "layoutId": "ce56fa43-2c55-408f-9c17-ba32d690e94d",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "a92057cc-0bab-416c-a406-4d53adcb27a8",
+    "masterLayoutName": "Master",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "Apple SD Gothic Neo",
+      "Aptos"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "ce56fa43-2c55-408f-9c17-ba32d690e94d",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "a92057cc-0bab-416c-a406-4d53adcb27a8",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "a92057cc-0bab-416c-a406-4d53adcb27a8",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fil0rqd4",
+      "id": "1",
+      "bbox": [
+        0,
+        0,
+        1280,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#F7F3EC",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/83itgfml",
+      "id": "2",
+      "bbox": [
+        58,
+        42,
+        760,
+        54
+      ],
+      "geometry": "rect",
+      "text": "StoryLog의 한 문장: 내가 본 곳까지만 기억해준다",
+      "textPreview": "StoryLog의 한 문장: 내가 본 곳까지만 기억해준다",
+      "resolvedFontSize": 32,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 32,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "StoryLog의 한 문장: 내가 본 곳까지만 기억해준다"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "StoryLog의 한 문장: 내가 본 곳까지만 기억해준다",
+          "resolvedTextStyle": {
+            "fontSize": 32,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "StoryLog의 한 문장: 내가 본 곳까지만 기억해준다",
+              "fontSize": 32,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xobm58z2",
+      "id": "3",
+      "bbox": [
+        60,
+        92,
+        900,
+        34
+      ],
+      "geometry": "rect",
+      "text": "정보를 저장하는 앱이 아니라, 모든 정보에 공개 시점을 붙이는 앱입니다.",
+      "textPreview": "정보를 저장하는 앱이 아니라, 모든 정보에 공개 시점을 붙이는 앱입니다.",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#65717A",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "정보를 저장하는 앱이 아니라, 모든 정보에 공개 시점을 붙이는 앱입니다."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "정보를 저장하는 앱이 아니라, 모든 정보에 공개 시점을 붙이는 앱입니다.",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#65717A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "정보를 저장하는 앱이 아니라, 모든 정보에 공개 시점을 붙이는 앱입니다.",
+              "fontSize": 15,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#65717A"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/m94fu18j",
+      "id": "4",
+      "bbox": [
+        88,
+        176,
+        420,
+        330
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF9F5",
+      "lineColor": "#E8C9BD",
+      "lineWidth": 1
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fu18jqh0",
+      "id": "5",
+      "bbox": [
+        772,
+        176,
+        420,
+        330
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F4FBF8",
+      "lineColor": "#BBDAD3",
+      "lineWidth": 1
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4fu18jqh",
+      "id": "6",
+      "bbox": [
+        124,
+        212,
+        320,
+        34
+      ],
+      "geometry": "rect",
+      "text": "기존 검색 경험",
+      "textPreview": "기존 검색 경험",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#E6614F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "기존 검색 경험"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "기존 검색 경험",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#E6614F",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "기존 검색 경험",
+              "fontSize": 24,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#E6614F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/x0nuxc3y",
+      "id": "7",
+      "bbox": [
+        124,
+        284,
+        320,
+        118
+      ],
+      "geometry": "rect",
+      "text": "작품명 검색\n→ 위키/커뮤니티 진입\n→ 결말·정체·사망 정보 노출",
+      "textPreview": "작품명 검색 | → 위키/커뮤니티 진입 | → 결말·정체·사망 정보 노출",
+      "resolvedFontSize": 23,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 23,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "작품명 검색"
+          },
+          {
+            "index": 2,
+            "text": "→ 위키/커뮤니티 진입"
+          },
+          {
+            "index": 3,
+            "text": "→ 결말·정체·사망 정보 노출"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "작품명 검색",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "작품명 검색",
+              "fontSize": 23,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "→ 위키/커뮤니티 진입",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "→ 위키/커뮤니티 진입",
+              "fontSize": 23,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "→ 결말·정체·사망 정보 노출",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "→ 결말·정체·사망 정보 노출",
+              "fontSize": 23,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mlkjm1cf",
+      "id": "8",
+      "bbox": [
+        808,
+        212,
+        320,
+        34
+      ],
+      "geometry": "rect",
+      "text": "StoryLog 경험",
+      "textPreview": "StoryLog 경험",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#0C7C74",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "StoryLog 경험"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "StoryLog 경험",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#0C7C74",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "StoryLog 경험",
+              "fontSize": 24,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#0C7C74",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/f6dcbulw",
+      "id": "9",
+      "bbox": [
+        808,
+        284,
+        320,
+        118
+      ],
+      "geometry": "rect",
+      "text": "현재 위치 설정\n→ 인물·사건·관계 조회\n→ 이후 정보 자동 잠금",
+      "textPreview": "현재 위치 설정 | → 인물·사건·관계 조회 | → 이후 정보 자동 잠금",
+      "resolvedFontSize": 23,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 23,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "현재 위치 설정"
+          },
+          {
+            "index": 2,
+            "text": "→ 인물·사건·관계 조회"
+          },
+          {
+            "index": 3,
+            "text": "→ 이후 정보 자동 잠금"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "현재 위치 설정",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "현재 위치 설정",
+              "fontSize": 23,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "→ 인물·사건·관계 조회",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "→ 인물·사건·관계 조회",
+              "fontSize": 23,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "→ 이후 정보 자동 잠금",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "→ 이후 정보 자동 잠금",
+              "fontSize": 23,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vixczed8",
+      "id": "10",
+      "bbox": [
+        566,
+        304,
+        96,
+        8
+      ],
+      "geometry": "rect",
+      "fillColor": "#0C7C74",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2x4nap4r",
+      "id": "11",
+      "bbox": [
+        646,
+        286,
+        35,
+        44
+      ],
+      "geometry": "triangle",
+      "fillColor": "#0C7C74",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/donyd0z6",
+      "id": "12",
+      "bbox": [
+        540,
+        350,
+        190,
+        30
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#DDEFEA",
+      "lineColor": "#075E59",
+      "lineWidth": 1
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/k3q5o7qp",
+      "id": "13",
+      "bbox": [
+        552,
+        356,
+        166,
+        20
+      ],
+      "geometry": "rect",
+      "text": "스포일러 필터",
+      "textPreview": "스포일러 필터",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 12,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#075E59",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "스포일러 필터"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "스포일러 필터",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#075E59",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "스포일러 필터",
+              "fontSize": 12,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#075E59",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/val87ed8",
+      "id": "14",
+      "bbox": [
+        188,
+        560,
+        108,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#13292D",
+      "lineColor": "#13292D",
+      "lineWidth": 1
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6psfil0r",
+      "id": "15",
+      "bbox": [
+        188,
+        572,
+        108,
+        20
+      ],
+      "geometry": "rect",
+      "text": "작품",
+      "textPreview": "작품",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "작품"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "작품",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "작품",
+              "fontSize": 14,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/dcbulwva",
+      "id": "16",
+      "bbox": [
+        342,
+        560,
+        108,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#13292D",
+      "lineColor": "#13292D",
+      "lineWidth": 1
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kre1w7mp",
+      "id": "17",
+      "bbox": [
+        342,
+        572,
+        108,
+        20
+      ],
+      "geometry": "rect",
+      "text": "회차",
+      "textPreview": "회차",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "회차"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "회차",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "회차",
+              "fontSize": 14,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/v6psfil0",
+      "id": "18",
+      "bbox": [
+        496,
+        560,
+        108,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#D7D0C4",
+      "lineWidth": 1
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2lszqtcj",
+      "id": "19",
+      "bbox": [
+        496,
+        572,
+        108,
+        20
+      ],
+      "geometry": "rect",
+      "text": "인물",
+      "textPreview": "인물",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "인물"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "인물",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "인물",
+              "fontSize": 14,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ap4r65wj",
+      "id": "20",
+      "bbox": [
+        650,
+        560,
+        108,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#D7D0C4",
+      "lineWidth": 1
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/za1gvy90",
+      "id": "21",
+      "bbox": [
+        650,
+        572,
+        108,
+        20
+      ],
+      "geometry": "rect",
+      "text": "사건",
+      "textPreview": "사건",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "사건"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "사건",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "사건",
+              "fontSize": 14,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/svu9knih",
+      "id": "22",
+      "bbox": [
+        804,
+        560,
+        108,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#D7D0C4",
+      "lineWidth": 1
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hgn29gr2",
+      "id": "23",
+      "bbox": [
+        804,
+        572,
+        108,
+        20
+      ],
+      "geometry": "rect",
+      "text": "관계",
+      "textPreview": "관계",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "관계"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "관계",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "관계",
+              "fontSize": 14,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a1gvy90j",
+      "id": "24",
+      "bbox": [
+        958,
+        560,
+        108,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#D7D0C4",
+      "lineWidth": 1
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zidonyd0",
+      "id": "25",
+      "bbox": [
+        958,
+        572,
+        108,
+        20
+      ],
+      "geometry": "rect",
+      "text": "떡밥",
+      "textPreview": "떡밥",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "떡밥"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "떡밥",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "떡밥",
+              "fontSize": 14,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s36hcrmh",
+      "id": "26",
+      "bbox": [
+        60,
+        672,
+        1160,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#D8D1C8",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hoza1gvy",
+      "id": "27",
+      "bbox": [
+        60,
+        682,
+        260,
+        22
+      ],
+      "geometry": "rect",
+      "text": "StoryLog concept · 03",
+      "textPreview": "StoryLog concept · 03",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Aptos",
+        "color": "#7A858B",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "StoryLog concept · 03"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "StoryLog concept · 03",
+          "resolvedTextStyle": {
+            "fontSize": 10,
+            "typeface": "Aptos",
+            "color": "#7A858B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "StoryLog concept · 03",
+              "fontSize": 10,
+              "typeface": "Aptos",
+              "color": "#7A858B"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

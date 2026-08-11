@@ -1,0 +1,8 @@
+task mode: create
+primary deck-profile: product-platform
+secondary gates: consumer-facing concept clarity, image-led product explanation
+required proof objects: problem framing, app workflow map, spoiler filter model, feature architecture, community model, MVP roadmap, technical stack
+source/asset requirements: source is docs/app_idea.md; generated concept images are original AI-created assets copied into workspace assets
+brand authenticity constraints: no external logos, copyrighted titles, or third-party product screenshots
+profile-specific QA gates: slide titles must state claims; diagrams must explain product logic; generated images must support the concept rather than act as filler
+known missing inputs: no final app name selected; no real product screenshots yet

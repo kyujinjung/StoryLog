@@ -1,0 +1,23 @@
+10-slide deck plan:
+1. Cover with generated product concept image
+2. Problem slide with three tension columns
+3. Product promise slide with before/after flow
+4. Core workflow map with editable process diagram
+5. Feature architecture slide with radial/module layout
+6. Spoiler-safe data model slide with lock/filter diagram
+7. Relationship and timeline slide with visual graph
+8. Spoiler-safe community slide with generated concept image
+9. MVP and roadmap slide with phased timeline
+10. Tech stack and next decisions slide with architecture lanes
+
+Macro-layout variety:
+- cover image split
+- tension columns
+- flow diagram
+- process map
+- module/radial architecture
+- filter/data model diagram
+- graph/timeline composition
+- image-led community explainer
+- roadmap timeline
+- stack lanes and decision list

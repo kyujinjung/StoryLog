@@ -1,0 +1,816 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/5221u6",
+    "id": "5221u6",
+    "slide": 8,
+    "layoutId": "ce56fa43-2c55-408f-9c17-ba32d690e94d",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "a92057cc-0bab-416c-a406-4d53adcb27a8",
+    "masterLayoutName": "Master",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "Apple SD Gothic Neo",
+      "Aptos"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "ce56fa43-2c55-408f-9c17-ba32d690e94d",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "a92057cc-0bab-416c-a406-4d53adcb27a8",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "a92057cc-0bab-416c-a406-4d53adcb27a8",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/18jqh0fe",
+      "id": "1",
+      "bbox": [
+        0,
+        0,
+        1280,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#F7F3EC",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qh0fepkz",
+      "id": "2",
+      "bbox": [
+        58,
+        42,
+        760,
+        54
+      ],
+      "geometry": "rect",
+      "text": "커뮤니티는 ‘게시판’보다 작품별 집단 기억장치로 설계한다",
+      "textPreview": "커뮤니티는 ‘게시판’보다 작품별 집단 기억장치로 설계한다",
+      "resolvedFontSize": 32,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 32,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "커뮤니티는 ‘게시판’보다 작품별 집단 기억장치로 설계한다"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "커뮤니티는 ‘게시판’보다 작품별 집단 기억장치로 설계한다",
+          "resolvedTextStyle": {
+            "fontSize": 32,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "커뮤니티는 ‘게시판’보다 작품별 집단 기억장치로 설계한다",
+              "fontSize": 32,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/j2t83itg",
+      "id": "3",
+      "bbox": [
+        60,
+        92,
+        900,
+        34
+      ],
+      "geometry": "rect",
+      "text": "같은 작품을 보는 사람끼리도 내가 본 범위 안에서만 안전하게 이야기할 수 있어야 합니다.",
+      "textPreview": "같은 작품을 보는 사람끼리도 내가 본 범위 안에서만 안전하게 이야기할 수 있어야 합니다.",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#65717A",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "같은 작품을 보는 사람끼리도 내가 본 범위 안에서만 안전하게 이야기할 수 있어야 합니다."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "같은 작품을 보는 사람끼리도 내가 본 범위 안에서만 안전하게 이야기할 수 있어야 합니다.",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#65717A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "같은 작품을 보는 사람끼리도 내가 본 범위 안에서만 안전하게 이야기할 수 있어야 합니다.",
+              "fontSize": 15,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#65717A"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/xczed8v6",
+      "id": "4",
+      "bbox": [
+        70,
+        162,
+        560,
+        392
+      ],
+      "alt": "Spoiler-safe community concept illustration",
+      "contentType": "image/png",
+      "imageFit": "cover",
+      "asset": {
+        "assetId": "ee307dd1-4489-4735-afb6-5aa098fd4941",
+        "contentType": "image/png",
+        "byteLength": 1567596
+      }
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1w7mp0bi",
+      "id": "5",
+      "bbox": [
+        690,
+        170,
+        420,
+        330
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#D7D0C4",
+      "lineWidth": 1
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q5o7qpg3",
+      "id": "6",
+      "bbox": [
+        728,
+        210,
+        260,
+        32
+      ],
+      "geometry": "rect",
+      "text": "진행도 기반 토론",
+      "textPreview": "진행도 기반 토론",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "진행도 기반 토론"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "진행도 기반 토론",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "진행도 기반 토론",
+              "fontSize": 24,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jqh0fepk",
+      "id": "7",
+      "bbox": [
+        730,
+        286,
+        7,
+        7
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#E6614F",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c3ylc7u5",
+      "id": "8",
+      "bbox": [
+        748,
+        280,
+        310,
+        30
+      ],
+      "geometry": "rect",
+      "text": "게시글 작성 시 스포일러 범위 필수 선택",
+      "textPreview": "게시글 작성 시 스포일러 범위 필수 선택",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "게시글 작성 시 스포일러 범위 필수 선택"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "게시글 작성 시 스포일러 범위 필수 선택",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "게시글 작성 시 스포일러 범위 필수 선택",
+              "fontSize": 15,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1kre1w7m",
+      "id": "9",
+      "bbox": [
+        730,
+        334,
+        7,
+        7
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#E6614F",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5o7qpg3e",
+      "id": "10",
+      "bbox": [
+        748,
+        328,
+        310,
+        30
+      ],
+      "geometry": "rect",
+      "text": "사용자 진행도보다 앞선 글은 자동 잠금",
+      "textPreview": "사용자 진행도보다 앞선 글은 자동 잠금",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "사용자 진행도보다 앞선 글은 자동 잠금"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "사용자 진행도보다 앞선 글은 자동 잠금",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "사용자 진행도보다 앞선 글은 자동 잠금",
+              "fontSize": 15,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/g3ex0nux",
+      "id": "11",
+      "bbox": [
+        730,
+        382,
+        7,
+        7
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#E6614F",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nih4byhg",
+      "id": "12",
+      "bbox": [
+        748,
+        376,
+        310,
+        30
+      ],
+      "geometry": "rect",
+      "text": "좋은 글은 개인 메모나 작품 DB 후보로 저장",
+      "textPreview": "좋은 글은 개인 메모나 작품 DB 후보로 저장",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "좋은 글은 개인 메모나 작품 DB 후보로 저장"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "좋은 글은 개인 메모나 작품 DB 후보로 저장",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "좋은 글은 개인 메모나 작품 DB 후보로 저장",
+              "fontSize": 15,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/yxobm58z",
+      "id": "13",
+      "bbox": [
+        730,
+        430,
+        7,
+        7
+      ],
+      "geometry": "ellipse",
+      "fillColor": "#E6614F",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9cvixcze",
+      "id": "14",
+      "bbox": [
+        748,
+        424,
+        310,
+        30
+      ],
+      "geometry": "rect",
+      "text": "질문·해석·떡밥·관계·오류 정정으로 분류",
+      "textPreview": "질문·해석·떡밥·관계·오류 정정으로 분류",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#172126",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "질문·해석·떡밥·관계·오류 정정으로 분류"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "질문·해석·떡밥·관계·오류 정정으로 분류",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#172126",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "질문·해석·떡밥·관계·오류 정정으로 분류",
+              "fontSize": 15,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#172126"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gr2p8nqx",
+      "id": "15",
+      "bbox": [
+        694,
+        538,
+        420,
+        52
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#13292D",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/r65wjudg",
+      "id": "16",
+      "bbox": [
+        724,
+        553,
+        360,
+        24
+      ],
+      "geometry": "rect",
+      "text": "내가 본 곳까지만 안전하게 이야기하는 작품 라운지",
+      "textPreview": "내가 본 곳까지만 안전하게 이야기하는 작품 라운지",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Apple SD Gothic Neo",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "내가 본 곳까지만 안전하게 이야기하는 작품 라운지"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "내가 본 곳까지만 안전하게 이야기하는 작품 라운지",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Apple SD Gothic Neo",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "내가 본 곳까지만 안전하게 이야기하는 작품 라운지",
+              "fontSize": 16,
+              "typeface": "Apple SD Gothic Neo",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ylc7u54z",
+      "id": "17",
+      "bbox": [
+        60,
+        672,
+        1160,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#D8D1C8",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/90je9cvi",
+      "id": "18",
+      "bbox": [
+        60,
+        682,
+        260,
+        22
+      ],
+      "geometry": "rect",
+      "text": "StoryLog concept · 08",
+      "textPreview": "StoryLog concept · 08",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Aptos",
+        "color": "#7A858B",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "StoryLog concept · 08"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "StoryLog concept · 08",
+          "resolvedTextStyle": {
+            "fontSize": 10,
+            "typeface": "Aptos",
+            "color": "#7A858B",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "StoryLog concept · 08",
+              "fontSize": 10,
+              "typeface": "Aptos",
+              "color": "#7A858B"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}
