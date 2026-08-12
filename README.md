@@ -26,13 +26,27 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
-Optional server-only value for future admin/server jobs:
+Optional server-only values:
 
 ```bash
 SUPABASE_SERVICE_ROLE_KEY=
+XAI_API_KEY=
+# XAI_MODEL=grok-4.5
 ```
 
-Never expose the service role key with `NEXT_PUBLIC_` and never commit real secrets.
+- `XAI_API_KEY` powers **AI 초안 정리** (SpaceXAI / xAI OpenAI-compatible API at `https://api.x.ai/v1`).
+- Never expose service role or `XAI_API_KEY` with `NEXT_PUBLIC_` and never commit real secrets.
+
+## AI draft flow
+
+On `/works/<work-id>`:
+
+1. Pick the episode that should be the **reveal point** for extracted lore.
+2. Paste episode notes (optionally include the saved episode summary).
+3. Click **AI 초안 만들기** — the model returns candidates for characters, events, terms, notes, and relationships.
+4. Uncheck anything wrong, then **선택한 초안 저장**.
+
+AI never auto-saves; approval is required. Without `XAI_API_KEY`, the panel explains how to configure the key.
 
 ## Supabase migrations
 

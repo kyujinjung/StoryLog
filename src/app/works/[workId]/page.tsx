@@ -2,12 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ClipboardList, Network } from "lucide-react";
 
+import { LoreDraftPanel } from "@/components/ai/lore-draft-panel";
 import { LorePanels } from "@/components/lore/lore-panels";
 import { RelationshipManager } from "@/components/relationships/relationship-manager";
 import { DeleteEpisodeButton } from "@/components/works/delete-episode-button";
 import { EpisodeForm } from "@/components/works/episode-form";
 import { ProgressForm } from "@/components/works/progress-form";
 import { Button } from "@/components/ui/button";
+import { hasXaiApiKey } from "@/lib/ai/xai";
 import { getNextRevealOrder, getWorkDetail } from "@/lib/data/storylog";
 import { formatEpisodeLabel } from "@/lib/storylog-format";
 
@@ -88,6 +90,12 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
           </div>
         </div>
       </section>
+
+      <LoreDraftPanel
+        workId={work.id}
+        episodes={work.episodes}
+        hasXaiKey={hasXaiApiKey()}
+      />
 
       <LorePanels
         workId={work.id}
