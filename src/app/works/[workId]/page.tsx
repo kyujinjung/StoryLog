@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ClipboardList, Network } from "lucide-react";
+import { ClipboardList, MessagesSquare, Network } from "lucide-react";
 
 import { LoreDraftPanel } from "@/components/ai/lore-draft-panel";
 import { LorePanels } from "@/components/lore/lore-panels";
@@ -64,6 +64,12 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
             <Link href={`/works/${work.id}/graph`}>
               <Network className="h-4 w-4" aria-hidden="true" />
               관계도
+            </Link>
+          </Button>
+          <Button asChild variant="secondary" size="sm">
+            <Link href={`/works/${work.id}/lounge`}>
+              <MessagesSquare className="h-4 w-4" aria-hidden="true" />
+              작품 라운지
             </Link>
           </Button>
         </div>

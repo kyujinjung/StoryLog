@@ -152,3 +152,42 @@ export type Note = LoreVisibility & {
   created_at: string;
   updated_at: string;
 };
+
+export type CommunityPostCategory =
+  | "question"
+  | "theory"
+  | "discussion"
+  | "character"
+  | "spoiler";
+
+export type CommunitySpace = {
+  id: string;
+  title: string;
+  title_key: string;
+  medium: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CommunityPost = {
+  id: string;
+  space_id: string;
+  author_id: string;
+  category: CommunityPostCategory;
+  title: string;
+  body: string;
+  spoiler_reveal_order: number;
+  spoiler_label: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CommunityComment = {
+  id: string;
+  post_id: string;
+  author_id: string;
+  body: string;
+  spoiler_reveal_order: number;
+  created_at: string;
+  updated_at: string;
+};

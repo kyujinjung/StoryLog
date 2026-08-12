@@ -80,6 +80,19 @@ After creating a work and episodes, add plot notes in each episode's `줄거리 
 
 Add at least two characters on `/works/<work-id>`, set the work progress to an episode where both are revealed, then add an `인물 관계` record with a start/public episode. Open `/works/<work-id>/graph` to see the React Flow relationship graph; nodes and edges are filtered to the saved progress, and edges are dropped unless both endpoint characters are visible.
 
+## Community lounge (Phase 2)
+
+Apply the Phase 2 migration (`supabase/migrations/20260812010000_phase2_community.sql`) in the Supabase SQL editor.
+
+Then open `/works/<work-id>/lounge`:
+
+1. Posts are shared by **normalized work title** (same title → same lounge).
+2. Every post/comment has a **spoiler range** (episode reveal order).
+3. Only posts with `spoiler_reveal_order <= your progress` are shown.
+4. Use **내 메모로** to copy a visible post into personal notes.
+
+Without the migration, creating a post will show a clear error asking you to run Phase 2 SQL.
+
 ## Schema notes
 
 All personal Phase 1 tables carry `user_id` and use RLS policies keyed to `auth.uid()`. Lore entities carry `work_id` plus `reveal_episode_id` and `reveal_order` so the app can filter records against `user_progress.reveal_order` before rendering spoilers.
