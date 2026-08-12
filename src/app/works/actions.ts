@@ -7,6 +7,7 @@ import { getAuthDataState, type AuthDataState } from "@/lib/data/storylog";
 
 export type ActionState = {
   error?: string;
+  message?: string;
 };
 
 const WORK_TYPES = new Set(["book", "movie", "drama", "webtoon", "other"]);
@@ -147,6 +148,63 @@ export async function createWork(
   redirect(`/works/${data.id}`);
 }
 
+async function allocateRevealOrder(
+  state: Extract<AuthDataState, { status: "ready" }>,
+  workId: string,
+  preferred: number | null,
+  episodeNumber: number | null,
+  excludeEpisodeId?: string
+) {
+  let query = state.supabase
+    .from("episodes")
+    .select("id,reveal_order")
+    .eq("work_id", workId)
+    .eq("user_id", state.userId)
+    .order("reveal_order", { ascending: true });
+
+  const { data, error } = await query;
+
+  if (error) {
+    return { error: error.message } as const;
+  }
+
+  const rows = (data ?? []).filter(
+    (row) => !excludeEpisodeId || row.id !== excludeEpisodeId
+  );
+  const used = new Set(rows.map((row) => row.reveal_order as number));
+  const maxOrder = rows.reduce(
+    (highest, row) => Math.max(highest, row.reveal_order as number),
+    0
+  );
+
+  const candidates = [
+    preferred,
+    episodeNumber !== null && Number.isInteger(episodeNumber)
+      ? episodeNumber
+      : null,
+    maxOrder + 1,
+    rows.length === 0 ? 1 : null
+  ];
+
+  for (const candidate of candidates) {
+    if (
+      candidate !== null &&
+      candidate >= 0 &&
+      Number.isInteger(candidate) &&
+      !used.has(candidate)
+    ) {
+      return { reveal_order: candidate } as const;
+    }
+  }
+
+  let next = maxOrder + 1;
+  while (used.has(next)) {
+    next += 1;
+  }
+
+  return { reveal_order: next } as const;
+}
+
 export async function createEpisode(
   _previousState: ActionState,
   formData: FormData
@@ -161,7 +219,7 @@ export async function createEpisode(
   const seasonLabel = getString(formData, "season_label");
   const episodeNumber = getNumber(formData, "episode_number");
   const episodeLabel = getString(formData, "episode_label");
-  const revealOrder = getNumber(formData, "reveal_order");
+  const preferredRevealOrder = getNumber(formData, "reveal_order");
   const title = getString(formData, "title");
   const summary = getString(formData, "summary");
 
@@ -173,8 +231,22 @@ export async function createEpisode(
     return { error: "회차 번호 또는 회차 라벨을 입력해 주세요." };
   }
 
-  if (revealOrder === null || revealOrder < 0 || !Number.isInteger(revealOrder)) {
+  if (
+    preferredRevealOrder !== null &&
+    (preferredRevealOrder < 0 || !Number.isInteger(preferredRevealOrder))
+  ) {
     return { error: "스포일러 순서는 0 이상의 정수여야 합니다." };
+  }
+
+  const allocated = await allocateRevealOrder(
+    state,
+    workId,
+    preferredRevealOrder,
+    episodeNumber
+  );
+
+  if ("error" in allocated) {
+    return { error: allocated.error };
   }
 
   const normalizedLabel =
@@ -186,12 +258,19 @@ export async function createEpisode(
     season_label: seasonLabel || null,
     episode_label: normalizedLabel,
     episode_number: episodeNumber,
-    reveal_order: revealOrder,
+    reveal_order: allocated.reveal_order,
     title: title || null,
     summary: summary || null
   });
 
   if (error) {
+    if (error.message.includes("episodes_work_id_reveal_order_key")) {
+      return {
+        error:
+          "스포 순서가 이미 사용 중입니다. 다른 번호를 쓰거나 비운 뒤 다시 저장해 주세요."
+      };
+    }
+
     return { error: error.message };
   }
 
@@ -215,7 +294,7 @@ export async function updateEpisode(
   const seasonLabel = getString(formData, "season_label");
   const episodeNumber = getNumber(formData, "episode_number");
   const episodeLabel = getString(formData, "episode_label");
-  const revealOrder = getNumber(formData, "reveal_order");
+  const preferredRevealOrder = getNumber(formData, "reveal_order");
   const title = getString(formData, "title");
   const summary = getString(formData, "summary");
 
@@ -227,8 +306,24 @@ export async function updateEpisode(
     return { error: "회차 번호 또는 회차 라벨을 입력해 주세요." };
   }
 
-  if (revealOrder === null || revealOrder < 0 || !Number.isInteger(revealOrder)) {
+  if (
+    preferredRevealOrder === null ||
+    preferredRevealOrder < 0 ||
+    !Number.isInteger(preferredRevealOrder)
+  ) {
     return { error: "스포일러 순서는 0 이상의 정수여야 합니다." };
+  }
+
+  const allocated = await allocateRevealOrder(
+    state,
+    workId,
+    preferredRevealOrder,
+    episodeNumber,
+    episodeId
+  );
+
+  if ("error" in allocated) {
+    return { error: allocated.error };
   }
 
   const { error } = await state.supabase
@@ -238,7 +333,7 @@ export async function updateEpisode(
       episode_label:
         episodeLabel || (episodeNumber !== null ? `${episodeNumber}화` : ""),
       episode_number: episodeNumber,
-      reveal_order: revealOrder,
+      reveal_order: allocated.reveal_order,
       title: title || null,
       summary: summary || null
     })
@@ -247,10 +342,49 @@ export async function updateEpisode(
     .eq("user_id", state.userId);
 
   if (error) {
+    if (error.message.includes("episodes_work_id_reveal_order_key")) {
+      return {
+        error: "스포 순서가 다른 회차와 겹칩니다. 다른 번호를 사용해 주세요."
+      };
+    }
+
     return { error: error.message };
   }
 
+  // Keep denormalized reveal_order on lore rows in sync with the linked episode.
+  const loreTables = [
+    "characters",
+    "character_states",
+    "events",
+    "terms",
+    "notes",
+    "relationships",
+    "relationship_changes",
+    "factions",
+    "foreshadows"
+  ] as const;
+
+  await Promise.all(
+    loreTables.map((table) =>
+      state.supabase
+        .from(table)
+        .update({ reveal_order: allocated.reveal_order })
+        .eq("work_id", workId)
+        .eq("user_id", state.userId)
+        .eq("reveal_episode_id", episodeId)
+    )
+  );
+
+  await state.supabase
+    .from("user_progress")
+    .update({ reveal_order: allocated.reveal_order })
+    .eq("work_id", workId)
+    .eq("user_id", state.userId)
+    .eq("episode_id", episodeId);
+
   revalidatePath(`/works/${workId}`);
+  revalidatePath(`/works/${workId}/review`);
+  revalidatePath(`/works/${workId}/graph`);
   return {};
 }
 
@@ -274,28 +408,75 @@ export async function deleteEpisode(formData: FormData) {
   revalidatePath(`/works/${workId}`);
 }
 
-export async function setProgress(formData: FormData) {
+export async function setProgress(
+  _previousState: ActionState,
+  formData: FormData
+): Promise<ActionState> {
   const state = await getReadyState();
   const workId = getString(formData, "work_id");
   const episodeId = getString(formData, "episode_id");
-  const revealOrder = getNumber(formData, "reveal_order") ?? 0;
 
-  if (state.status === "error" || !workId) {
-    return;
+  if (state.status === "error") {
+    return { error: state.error };
   }
 
-  await state.supabase.from("user_progress").upsert(
-    {
-      user_id: state.userId,
-      work_id: workId,
-      episode_id: episodeId || null,
-      reveal_order: Math.max(0, revealOrder)
-    },
-    { onConflict: "user_id,work_id" }
-  );
+  if (!workId) {
+    return { error: "작품 정보를 찾을 수 없습니다." };
+  }
+
+  // Always resolve reveal_order from the selected episode in the DB.
+  // Never trust a client-provided denormalized value (stale form races).
+  let revealOrder = 0;
+  let resolvedEpisodeId: string | null = null;
+
+  if (episodeId) {
+    const { data: episode, error } = await state.supabase
+      .from("episodes")
+      .select("id,reveal_order")
+      .eq("id", episodeId)
+      .eq("work_id", workId)
+      .eq("user_id", state.userId)
+      .maybeSingle();
+
+    if (error || !episode) {
+      return {
+        error:
+          "선택한 회차를 찾을 수 없습니다. 페이지를 새로고침한 뒤 다시 저장해 주세요."
+      };
+    }
+
+    resolvedEpisodeId = episode.id as string;
+    revealOrder = episode.reveal_order as number;
+  }
+
+  const { data: saved, error } = await state.supabase
+    .from("user_progress")
+    .upsert(
+      {
+        user_id: state.userId,
+        work_id: workId,
+        episode_id: resolvedEpisodeId,
+        reveal_order: revealOrder
+      },
+      { onConflict: "user_id,work_id" }
+    )
+    .select("id,episode_id,reveal_order,updated_at")
+    .single();
+
+  if (error || !saved) {
+    return { error: error?.message ?? "진행도 저장에 실패했습니다." };
+  }
 
   revalidatePath("/works");
   revalidatePath(`/works/${workId}`);
+  revalidatePath(`/works/${workId}/review`);
+  revalidatePath(`/works/${workId}/graph`);
+
+  return {
+    message: resolvedEpisodeId
+      ? `진행도를 저장했습니다. (공개 상한 순서 ${revealOrder})`
+      : "진행도를 '아직 시작 전'으로 저장했습니다."
+  };
 }
 
 export async function createCharacter(

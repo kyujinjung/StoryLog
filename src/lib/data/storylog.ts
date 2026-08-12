@@ -1,5 +1,8 @@
 import { createClient, hasSupabaseEnv } from "@/lib/supabase/server";
-import { getProgressRevealOrder } from "@/lib/spoiler-filter";
+import {
+  filterRevealed,
+  getProgressRevealOrder
+} from "@/lib/spoiler-filter";
 import type {
   Character,
   CharacterState,
@@ -28,6 +31,7 @@ export type WorkDetail = Work & {
   episodes: Episode[];
   progress: UserProgress | null;
   currentEpisode: Episode | null;
+  currentRevealOrder: number;
   lore: VisibleLore;
 };
 
@@ -176,7 +180,7 @@ export async function getWorkDetail(workId: string): Promise<WorkDetail | null> 
 
   const episodeRows = (episodes ?? []) as Episode[];
   const progressRow = (progress as UserProgress | null) ?? null;
-  const lore = await getVisibleLoreForWork(workId, progressRow);
+  const lore = await getVisibleLoreForWork(workId, progressRow, episodeRows);
 
   return {
     ...(work as Work),
@@ -185,13 +189,15 @@ export async function getWorkDetail(workId: string): Promise<WorkDetail | null> 
     currentEpisode:
       episodeRows.find((episode) => episode.id === progressRow?.episode_id) ??
       null,
+    currentRevealOrder: getProgressRevealOrder(progressRow, episodeRows),
     lore
   };
 }
 
 export async function getVisibleLoreForWork(
   workId: string,
-  progress: UserProgress | null
+  progress: UserProgress | null,
+  episodes: Episode[] = []
 ): Promise<VisibleLore> {
   const state = await getAuthDataState();
 
@@ -208,8 +214,9 @@ export async function getVisibleLoreForWork(
   }
 
   const { supabase, userId } = state;
-  const revealOrder = getProgressRevealOrder(progress);
 
+  // Load full personal lore, then filter by the linked episode's reveal_order.
+  // This avoids stale denormalized character.reveal_order leaking future spoiler.
   const [
     { data: characters },
     { data: characterStates },
@@ -224,60 +231,65 @@ export async function getVisibleLoreForWork(
       .select("*")
       .eq("work_id", workId)
       .eq("user_id", userId)
-      .lte("reveal_order", revealOrder)
       .order("name", { ascending: true }),
     supabase
       .from("character_states")
       .select("*")
       .eq("work_id", workId)
       .eq("user_id", userId)
-      .lte("reveal_order", revealOrder)
       .order("reveal_order", { ascending: true }),
     supabase
       .from("events")
       .select("*")
       .eq("work_id", workId)
       .eq("user_id", userId)
-      .lte("reveal_order", revealOrder)
       .order("reveal_order", { ascending: true }),
     supabase
       .from("terms")
       .select("*")
       .eq("work_id", workId)
       .eq("user_id", userId)
-      .lte("reveal_order", revealOrder)
       .order("term", { ascending: true }),
     supabase
       .from("notes")
       .select("*")
       .eq("work_id", workId)
       .eq("user_id", userId)
-      .lte("reveal_order", revealOrder)
       .order("updated_at", { ascending: false }),
     supabase
       .from("relationships")
       .select("*")
       .eq("work_id", workId)
       .eq("user_id", userId)
-      .lte("reveal_order", revealOrder)
       .order("reveal_order", { ascending: true }),
     supabase
       .from("relationship_changes")
       .select("*")
       .eq("work_id", workId)
       .eq("user_id", userId)
-      .lte("reveal_order", revealOrder)
       .order("reveal_order", { ascending: true })
   ]);
 
   return {
-    characters: (characters ?? []) as Character[],
-    characterStates: (characterStates ?? []) as CharacterState[],
-    events: (events ?? []) as Event[],
-    terms: (terms ?? []) as Term[],
-    notes: (notes ?? []) as Note[],
-    relationships: (relationships ?? []) as Relationship[],
-    relationshipChanges: (relationshipChanges ?? []) as RelationshipChange[]
+    characters: filterRevealed((characters ?? []) as Character[], progress, episodes),
+    characterStates: filterRevealed(
+      (characterStates ?? []) as CharacterState[],
+      progress,
+      episodes
+    ),
+    events: filterRevealed((events ?? []) as Event[], progress, episodes),
+    terms: filterRevealed((terms ?? []) as Term[], progress, episodes),
+    notes: filterRevealed((notes ?? []) as Note[], progress, episodes),
+    relationships: filterRevealed(
+      (relationships ?? []) as Relationship[],
+      progress,
+      episodes
+    ),
+    relationshipChanges: filterRevealed(
+      (relationshipChanges ?? []) as RelationshipChange[],
+      progress,
+      episodes
+    )
   };
 }
 
@@ -301,7 +313,7 @@ export async function getReviewData(
   }
 
   const normalizedQuery = query.trim().toLowerCase();
-  const currentRevealOrder = getProgressRevealOrder(work.progress);
+  const currentRevealOrder = work.currentRevealOrder;
   const safeEpisodes = work.episodes.filter(
     (episode) => episode.reveal_order <= currentRevealOrder
   );
@@ -401,7 +413,7 @@ export async function getRelationshipGraphData(
 
   return {
     ...work,
-    currentRevealOrder: getProgressRevealOrder(work.progress),
+    currentRevealOrder: work.currentRevealOrder,
     graphCharacters: work.lore.characters,
     graphRelationships
   };

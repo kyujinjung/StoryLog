@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 
 import {
   createEpisode,
@@ -27,9 +27,24 @@ export function EpisodeForm({
 }: EpisodeFormProps) {
   const action = episode ? updateEpisode : createEpisode;
   const [state, formAction, isPending] = useActionState(action, initialState);
+  const formKey = episode
+    ? `edit-${episode.id}-${episode.updated_at}`
+    : `new-${workId}-${nextRevealOrder}`;
+  const [revealOrder, setRevealOrder] = useState(
+    String(episode?.reveal_order ?? nextRevealOrder)
+  );
+  const [episodeNumber, setEpisodeNumber] = useState(
+    episode?.episode_number != null ? String(episode.episode_number) : ""
+  );
+
+  useEffect(() => {
+    if (!episode) {
+      setRevealOrder(String(nextRevealOrder));
+    }
+  }, [episode, nextRevealOrder]);
 
   return (
-    <form action={formAction} className="grid gap-3">
+    <form key={formKey} action={formAction} className="grid gap-3">
       <input type="hidden" name="work_id" value={workId} />
       {episode ? <input type="hidden" name="episode_id" value={episode.id} /> : null}
 
@@ -51,7 +66,15 @@ export function EpisodeForm({
             type="number"
             step="1"
             min="0"
-            defaultValue={episode?.episode_number ?? ""}
+            value={episodeNumber}
+            onChange={(event) => {
+              const value = event.target.value;
+              setEpisodeNumber(value);
+
+              if (!episode && value !== "" && Number.isInteger(Number(value))) {
+                setRevealOrder(value);
+              }
+            }}
             placeholder="1"
           />
         </div>
@@ -72,9 +95,15 @@ export function EpisodeForm({
             type="number"
             step="1"
             min="0"
-            defaultValue={episode?.reveal_order ?? nextRevealOrder}
+            value={revealOrder}
+            onChange={(event) => setRevealOrder(event.target.value)}
             required
           />
+          {!episode ? (
+            <p className="text-xs text-muted-foreground">
+              이미 쓴 순서면 서버가 다음 빈 번호로 자동 보정합니다.
+            </p>
+          ) : null}
         </div>
       </div>
 

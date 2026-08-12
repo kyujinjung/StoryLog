@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 
-import { setProgress } from "@/app/works/actions";
+import { setProgress, type ActionState } from "@/app/works/actions";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { formatEpisodeLabel } from "@/lib/storylog-format";
@@ -14,17 +14,30 @@ type ProgressFormProps = {
   progress: UserProgress | null;
 };
 
+const initialState: ActionState = {};
+
 export function ProgressForm({ workId, episodes, progress }: ProgressFormProps) {
-  const initialEpisode =
-    episodes.find((episode) => episode.id === progress?.episode_id) ?? null;
-  const [episodeId, setEpisodeId] = useState(initialEpisode?.id ?? "");
+  const savedEpisodeId = progress?.episode_id ?? "";
+  const [episodeId, setEpisodeId] = useState(savedEpisodeId);
+  const [state, formAction, isPending] = useActionState(setProgress, initialState);
+
+  // After server revalidation, always mirror the saved progress into the select.
+  useEffect(() => {
+    setEpisodeId(savedEpisodeId);
+  }, [savedEpisodeId, progress?.updated_at]);
+
   const selectedEpisode =
     episodes.find((episode) => episode.id === episodeId) ?? null;
+  const savedEpisode =
+    episodes.find((episode) => episode.id === savedEpisodeId) ?? null;
 
   return (
-    <form action={setProgress} className="grid gap-3 rounded-lg border bg-card p-5">
+    <form
+      action={formAction}
+      className="grid gap-3 rounded-lg border bg-card p-5"
+      key={`progress-form-${workId}-${progress?.updated_at ?? "none"}-${savedEpisodeId || "unset"}`}
+    >
       <input type="hidden" name="work_id" value={workId} />
-      <input type="hidden" name="reveal_order" value={selectedEpisode?.reveal_order ?? 0} />
 
       <div className="grid gap-2">
         <Label htmlFor="episode_id">현재 감상 위치</Label>
@@ -39,13 +52,35 @@ export function ProgressForm({ workId, episodes, progress }: ProgressFormProps) 
           {episodes.map((episode) => (
             <option key={episode.id} value={episode.id}>
               {formatEpisodeLabel(episode) || `스포 순서 ${episode.reveal_order}`}
+              {` · 순서 ${episode.reveal_order}`}
             </option>
           ))}
         </select>
+        <p className="text-xs text-muted-foreground">
+          선택한 회차의 스포 순서 이하 정보만 인물/복습/관계도에 표시됩니다.
+          {selectedEpisode
+            ? ` 선택 중: 순서 ${selectedEpisode.reveal_order}`
+            : " 진행도를 저장해야 로어가 열립니다."}
+          {savedEpisode
+            ? ` · 저장됨: ${formatEpisodeLabel(savedEpisode) || `순서 ${savedEpisode.reveal_order}`}`
+            : progress
+              ? " · 저장됨: 아직 시작 전"
+              : ""}
+        </p>
       </div>
 
-      <Button type="submit" disabled={episodes.length === 0 && !progress}>
-        진행도 저장
+      {state.error ? (
+        <p className="rounded-md bg-muted p-3 text-sm text-muted-foreground">
+          {state.error}
+        </p>
+      ) : null}
+
+      {state.message ? (
+        <p className="rounded-md bg-secondary p-3 text-sm">{state.message}</p>
+      ) : null}
+
+      <Button type="submit" disabled={isPending || (episodes.length === 0 && !progress)}>
+        {isPending ? "저장 중" : "진행도 저장"}
       </Button>
     </form>
   );

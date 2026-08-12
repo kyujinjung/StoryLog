@@ -9,7 +9,6 @@ import { EpisodeForm } from "@/components/works/episode-form";
 import { ProgressForm } from "@/components/works/progress-form";
 import { Button } from "@/components/ui/button";
 import { getNextRevealOrder, getWorkDetail } from "@/lib/data/storylog";
-import { getProgressRevealOrder } from "@/lib/spoiler-filter";
 import { formatEpisodeLabel } from "@/lib/storylog-format";
 
 type WorkDetailPageProps = {
@@ -31,6 +30,10 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
     : work.progress
       ? "아직 시작 전"
       : "미설정";
+  const progressCeilingLabel =
+    work.currentRevealOrder < 0
+      ? "진행도 미설정 · 로어 숨김"
+      : `공개 상한 순서 ${work.currentRevealOrder}`;
 
   return (
     <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10">
@@ -48,6 +51,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
           <div className="rounded-md bg-primary px-3 py-2 text-sm text-primary-foreground">
             현재 위치: {currentLabel}
           </div>
+          <p className="text-xs text-muted-foreground">{progressCeilingLabel}</p>
           <Button asChild variant="secondary" size="sm">
             <Link href={`/works/${work.id}/review`}>
               <ClipboardList className="h-4 w-4" aria-hidden="true" />
@@ -77,6 +81,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
           </p>
           <div className="mt-5">
             <EpisodeForm
+              key={`create-${work.id}-${getNextRevealOrder(work.episodes)}`}
               workId={work.id}
               nextRevealOrder={getNextRevealOrder(work.episodes)}
             />
@@ -88,7 +93,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         workId={work.id}
         episodes={work.episodes}
         lore={work.lore}
-        currentRevealOrder={getProgressRevealOrder(work.progress)}
+        currentRevealOrder={work.currentRevealOrder}
       />
 
       <RelationshipManager

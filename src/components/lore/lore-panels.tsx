@@ -500,9 +500,16 @@ export function LorePanels({
           </div>
           <div className="inline-flex items-center gap-2 rounded-md bg-secondary px-3 py-2 text-sm">
             <ShieldCheck className="h-4 w-4 text-primary" aria-hidden="true" />
-            Safe mode · reveal_order {currentRevealOrder}
+            {currentRevealOrder < 0
+              ? "Safe mode · 진행도 미설정 (로어 숨김)"
+              : `Safe mode · 공개 상한 순서 ${currentRevealOrder}`}
           </div>
         </div>
+        <p className="mt-3 text-sm text-muted-foreground">
+          인물/사건 추가 시 <strong>공개 회차</strong>를 반드시 해당 정보가 처음
+          나오는 회차로 지정하세요. 진행도보다 뒤 회차로 저장된 항목은 목록에
+          나타나지 않습니다.
+        </p>
         {episodes.length === 0 ? (
           <p className="mt-4 rounded-md bg-muted p-3 text-sm text-muted-foreground">
             회차를 먼저 추가해야 공개 회차를 지정하고 기록을 만들 수 있습니다.
