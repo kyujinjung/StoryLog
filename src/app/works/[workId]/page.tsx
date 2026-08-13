@@ -5,8 +5,8 @@ import { ClipboardList, MessagesSquare, Network } from "lucide-react";
 import { LoreDraftPanel } from "@/components/ai/lore-draft-panel";
 import { LorePanels } from "@/components/lore/lore-panels";
 import { RelationshipManager } from "@/components/relationships/relationship-manager";
-import { DeleteEpisodeButton } from "@/components/works/delete-episode-button";
 import { EpisodeForm } from "@/components/works/episode-form";
+import { EpisodeSchedule } from "@/components/works/episode-schedule";
 import { ProgressForm } from "@/components/works/progress-form";
 import { WorkCoverForm } from "@/components/works/work-cover-form";
 import { Button } from "@/components/ui/button";
@@ -161,37 +161,19 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
       <section className="grid gap-4">
         <div>
-          <h2 className="text-xl font-semibold">회차 목록</h2>
+          <p className="cinema-section-label">SCHEDULE</p>
+          <h2 className="cinema-title mt-1 text-2xl">상영 회차표</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            시즌/권, 회차 번호, 제목, 스포 순서를 수정할 수 있습니다.
+            극장 시간표처럼 회차를 보고, 탭해서 수정합니다. 현재 진행 회차는 NOW로
+            표시됩니다.
           </p>
         </div>
 
-        {work.episodes.length === 0 ? (
-          <div className="rounded-lg border bg-card p-8 text-center text-muted-foreground">
-            아직 회차가 없습니다. 첫 회차를 추가해 현재 위치를 설정하세요.
-          </div>
-        ) : (
-          <div className="grid gap-4">
-            {work.episodes.map((episode) => (
-              <article key={episode.id} className="rounded-lg border bg-card p-5">
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <div>
-                    <h3 className="font-semibold">
-                      {formatEpisodeLabel(episode) ||
-                        `스포 순서 ${episode.reveal_order}`}
-                    </h3>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      reveal_order {episode.reveal_order}
-                    </p>
-                  </div>
-                  <DeleteEpisodeButton workId={work.id} episodeId={episode.id} />
-                </div>
-                <EpisodeForm workId={work.id} episode={episode} />
-              </article>
-            ))}
-          </div>
-        )}
+        <EpisodeSchedule
+          workId={work.id}
+          episodes={work.episodes}
+          currentEpisodeId={work.currentEpisode?.id ?? null}
+        />
       </section>
     </div>
   );

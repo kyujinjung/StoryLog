@@ -5,6 +5,7 @@ import { Clapperboard, LogIn, Ticket } from "lucide-react";
 
 import "./globals.css";
 import "@xyflow/react/dist/style.css";
+import { BottomNav } from "@/components/layout/bottom-nav";
 import { Button } from "@/components/ui/button";
 
 const bodyFont = Noto_Sans_KR({
@@ -65,10 +66,11 @@ export default function RootLayout({
               </div>
             </nav>
           </header>
-          <main className="pb-16">{children}</main>
-          <footer className="border-t border-white/5 py-8 text-center text-xs text-muted-foreground">
+          <main className="pb-28">{children}</main>
+          <footer className="hidden border-t border-white/5 py-8 text-center text-xs text-muted-foreground sm:block sm:pb-28">
             StoryLog · 스포일러 없는 시네마 메모리
           </footer>
+          <BottomNav />
         </div>
       </body>
     </html>
