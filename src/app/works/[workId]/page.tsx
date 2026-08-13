@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { hasXaiApiKey } from "@/lib/ai/xai";
 import { getNextRevealOrder, getWorkDetail } from "@/lib/data/storylog";
 import { formatEpisodeLabel } from "@/lib/storylog-format";
+import { getWorkCoverUrl } from "@/lib/work-cover";
 
 type WorkDetailPageProps = {
   params: Promise<{
@@ -37,15 +38,16 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
     work.currentRevealOrder < 0
       ? "진행도 미설정 · 로어 숨김"
       : `공개 상한 순서 ${work.currentRevealOrder}`;
+  const coverUrl = getWorkCoverUrl(work);
 
   return (
     <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10">
       <div className="cinema-card overflow-hidden rounded-2xl">
         <div className="relative min-h-[200px] overflow-hidden bg-gradient-to-br from-primary/40 via-black to-black sm:min-h-[240px]">
-          {work.cover_image_url ? (
+          {coverUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={work.cover_image_url}
+              src={coverUrl}
               alt=""
               className="absolute inset-0 h-full w-full object-cover opacity-45"
             />
@@ -53,11 +55,11 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40" />
           <div className="relative z-10 flex flex-wrap items-start justify-between gap-4 p-6 sm:p-8">
             <div className="flex gap-4">
-              {work.cover_image_url ? (
+              {coverUrl ? (
                 <div className="hidden shrink-0 overflow-hidden rounded-xl border border-white/15 shadow-2xl sm:block sm:w-28 md:w-32">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={work.cover_image_url}
+                    src={coverUrl}
                     alt={`${work.title} 포스터`}
                     className="aspect-[2/3] h-auto w-full object-cover"
                   />
@@ -118,10 +120,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
             episodes={work.episodes}
             progress={work.progress}
           />
-          <WorkCoverForm
-            workId={work.id}
-            coverImageUrl={work.cover_image_url}
-          />
+          <WorkCoverForm workId={work.id} coverImageUrl={coverUrl} />
         </div>
 
         <div className="cinema-card rounded-2xl p-5">

@@ -4,7 +4,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { getAuthDataState, type AuthDataState } from "@/lib/data/storylog";
-import { resolveCoverImageUrl } from "@/lib/work-cover";
+import {
+  resolveCoverImageUrl,
+  withCoverMetadata
+} from "@/lib/work-cover";
 
 export type ActionState = {
   error?: string;
@@ -134,32 +137,58 @@ export async function createWork(
     return { error: cover.error };
   }
 
-  const { data, error } = await state.supabase
-    .from("works")
-    .insert({
-      user_id: state.userId,
-      title,
-      medium,
-      genre: genre || null,
-      description: description || null,
-      cover_image_url: cover.url,
-      status: "watching"
-    })
-    .select("id")
-    .single();
+  // Prefer column + metadata. If column is missing (migration not applied),
+  // retry with metadata-only so covers still show on the works list.
+  const baseRow = {
+    user_id: state.userId,
+    title,
+    medium,
+    genre: genre || null,
+    description: description || null,
+    status: "watching" as const,
+    metadata: withCoverMetadata({}, cover.url)
+  };
 
-  if (error) {
-    if (
-      error.message.includes("cover_image_url") ||
-      error.message.includes("schema cache")
+  let data: { id: string } | null = null;
+  let errorMessage: string | null = null;
+
+  {
+    const first = await state.supabase
+      .from("works")
+      .insert({
+        ...baseRow,
+        cover_image_url: cover.url
+      })
+      .select("id")
+      .single();
+
+    if (!first.error && first.data) {
+      data = first.data as { id: string };
+    } else if (
+      first.error &&
+      (first.error.message.includes("cover_image_url") ||
+        first.error.message.includes("schema cache") ||
+        first.error.code === "PGRST204" ||
+        first.error.code === "42703")
     ) {
-      return {
-        error:
-          "cover_image_url 컬럼이 없습니다. Supabase에 work cover 마이그레이션을 적용해 주세요."
-      };
-    }
+      const fallback = await state.supabase
+        .from("works")
+        .insert(baseRow)
+        .select("id")
+        .single();
 
-    return { error: error.message };
+      if (fallback.error || !fallback.data) {
+        errorMessage = fallback.error?.message ?? "작품 생성에 실패했습니다.";
+      } else {
+        data = fallback.data as { id: string };
+      }
+    } else {
+      errorMessage = first.error?.message ?? "작품 생성에 실패했습니다.";
+    }
+  }
+
+  if (!data) {
+    return { error: errorMessage ?? "작품 생성에 실패했습니다." };
   }
 
   revalidatePath("/works");
@@ -201,24 +230,52 @@ export async function updateWorkCover(
     coverImageUrl = cover.url;
   }
 
-  const { error } = await state.supabase
+  const { data: existing } = await state.supabase
     .from("works")
-    .update({ cover_image_url: coverImageUrl })
+    .select("metadata")
+    .eq("id", workId)
+    .eq("user_id", state.userId)
+    .maybeSingle();
+
+  if (!existing) {
+    return { error: "작품을 찾을 수 없습니다." };
+  }
+
+  const metadata = withCoverMetadata(
+    (existing.metadata as import("@/types/database").Json) ?? {},
+    coverImageUrl
+  );
+
+  // Dual-write: column when available, always metadata (migration-safe).
+  const withColumn = await state.supabase
+    .from("works")
+    .update({
+      cover_image_url: coverImageUrl,
+      metadata
+    })
     .eq("id", workId)
     .eq("user_id", state.userId);
 
-  if (error) {
-    if (
-      error.message.includes("cover_image_url") ||
-      error.message.includes("schema cache")
-    ) {
-      return {
-        error:
-          "cover_image_url 컬럼이 없습니다. Supabase에 work cover 마이그레이션을 적용해 주세요."
-      };
+  if (withColumn.error) {
+    const missingColumn =
+      withColumn.error.message.includes("cover_image_url") ||
+      withColumn.error.message.includes("schema cache") ||
+      withColumn.error.code === "PGRST204" ||
+      withColumn.error.code === "42703";
+
+    if (!missingColumn) {
+      return { error: withColumn.error.message };
     }
 
-    return { error: error.message };
+    const metadataOnly = await state.supabase
+      .from("works")
+      .update({ metadata })
+      .eq("id", workId)
+      .eq("user_id", state.userId);
+
+    if (metadataOnly.error) {
+      return { error: metadataOnly.error.message };
+    }
   }
 
   revalidatePath("/works");
@@ -226,7 +283,7 @@ export async function updateWorkCover(
   return {
     message: clearCover
       ? "대표 이미지를 제거했습니다."
-      : "대표 이미지를 저장했습니다."
+      : "대표 이미지를 저장했습니다. 내 작품 목록에서 확인해 주세요."
   };
 }
 

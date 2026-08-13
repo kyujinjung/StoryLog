@@ -1,4 +1,5 @@
 import type { AuthDataState } from "@/lib/data/storylog";
+import type { Json, Work } from "@/types/database";
 
 const MAX_COVER_BYTES = 5 * 1024 * 1024;
 const ALLOWED_TYPES = new Set([
@@ -28,6 +29,46 @@ function extensionForMime(mime: string) {
     default:
       return "jpg";
   }
+}
+
+/** Read cover from column and/or metadata (migration-safe). */
+export function getWorkCoverUrl(
+  work: Pick<Work, "cover_image_url" | "metadata"> | {
+    cover_image_url?: string | null;
+    metadata?: Json;
+  }
+): string | null {
+  if (typeof work.cover_image_url === "string" && work.cover_image_url.trim()) {
+    return work.cover_image_url.trim();
+  }
+
+  const metadata = work.metadata;
+  if (metadata && typeof metadata === "object" && !Array.isArray(metadata)) {
+    const value = (metadata as Record<string, unknown>).cover_image_url;
+    if (typeof value === "string" && value.trim()) {
+      return value.trim();
+    }
+  }
+
+  return null;
+}
+
+export function withCoverMetadata(
+  metadata: Json | null | undefined,
+  coverUrl: string | null
+): Record<string, unknown> {
+  const base =
+    metadata && typeof metadata === "object" && !Array.isArray(metadata)
+      ? { ...(metadata as Record<string, unknown>) }
+      : {};
+
+  if (coverUrl) {
+    base.cover_image_url = coverUrl;
+  } else {
+    delete base.cover_image_url;
+  }
+
+  return base;
 }
 
 export async function resolveCoverImageUrl(
@@ -68,12 +109,20 @@ export async function resolveCoverImageUrl(
       });
 
     if (uploadError) {
+      // Fall back: store as data URL in metadata when storage bucket is missing.
+      // Cap at ~1.5MB raw so JSON stays reasonable.
+      if (file.size <= 1.5 * 1024 * 1024) {
+        const base64 = buffer.toString("base64");
+        const dataUrl = `data:${file.type};base64,${base64}`;
+        return { url: dataUrl };
+      }
+
       return {
         url: null,
         error:
           uploadError.message.includes("Bucket not found") ||
-          uploadError.message.includes("not found")
-            ? "이미지 저장소(work-covers)가 없습니다. Phase 커버 마이그레이션을 적용해 주세요."
+          uploadError.message.toLowerCase().includes("not found")
+            ? "이미지 저장소(work-covers)가 없습니다. 마이그레이션을 적용하거나 1.5MB 이하 이미지/URL을 사용해 주세요."
             : `이미지 업로드 실패: ${uploadError.message}`
       };
     }
@@ -86,7 +135,7 @@ export async function resolveCoverImageUrl(
   }
 
   if (coverUrl) {
-    if (!isValidHttpUrl(coverUrl)) {
+    if (!isValidHttpUrl(coverUrl) && !coverUrl.startsWith("data:image/")) {
       return { url: null, error: "대표 이미지 URL이 올바르지 않습니다." };
     }
 

@@ -6,6 +6,7 @@ import { Clapperboard, Search } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { formatEpisodeLabel } from "@/lib/storylog-format";
+import { getWorkCoverUrl } from "@/lib/work-cover";
 import type { Episode, Work } from "@/types/database";
 
 export type WorkListItem = Work & {
@@ -92,7 +93,7 @@ export function WorksSearchGrid({ works }: { works: WorkListItem[] }) {
           {filtered.map((work) => {
             const mediumKey = work.medium ?? "other";
             const gradient = mediumAccent[mediumKey] ?? mediumAccent.other;
-            const cover = work.cover_image_url;
+            const cover = getWorkCoverUrl(work);
 
             return (
               <Link
