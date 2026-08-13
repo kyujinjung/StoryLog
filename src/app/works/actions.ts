@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { getAuthDataState, type AuthDataState } from "@/lib/data/storylog";
+import { resolveCoverImageUrl } from "@/lib/work-cover";
 
 export type ActionState = {
   error?: string;
@@ -127,6 +128,12 @@ export async function createWork(
     return { error: "작품 유형을 선택해 주세요." };
   }
 
+  const cover = await resolveCoverImageUrl(state, formData);
+
+  if (cover.error) {
+    return { error: cover.error };
+  }
+
   const { data, error } = await state.supabase
     .from("works")
     .insert({
@@ -135,17 +142,92 @@ export async function createWork(
       medium,
       genre: genre || null,
       description: description || null,
+      cover_image_url: cover.url,
       status: "watching"
     })
     .select("id")
     .single();
 
   if (error) {
+    if (
+      error.message.includes("cover_image_url") ||
+      error.message.includes("schema cache")
+    ) {
+      return {
+        error:
+          "cover_image_url 컬럼이 없습니다. Supabase에 work cover 마이그레이션을 적용해 주세요."
+      };
+    }
+
     return { error: error.message };
   }
 
   revalidatePath("/works");
   redirect(`/works/${data.id}`);
+}
+
+export async function updateWorkCover(
+  _previousState: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const state = await getReadyState();
+
+  if (state.status === "error") {
+    return { error: state.error };
+  }
+
+  const workId = getString(formData, "work_id");
+  const clearCover = getString(formData, "clear_cover") === "1";
+
+  if (!workId) {
+    return { error: "작품 정보를 찾을 수 없습니다." };
+  }
+
+  let coverImageUrl: string | null = null;
+
+  if (!clearCover) {
+    const cover = await resolveCoverImageUrl(state, formData, workId);
+
+    if (cover.error) {
+      return { error: cover.error };
+    }
+
+    if (!cover.url) {
+      return {
+        error: "이미지 파일을 선택하거나 이미지 URL을 입력해 주세요."
+      };
+    }
+
+    coverImageUrl = cover.url;
+  }
+
+  const { error } = await state.supabase
+    .from("works")
+    .update({ cover_image_url: coverImageUrl })
+    .eq("id", workId)
+    .eq("user_id", state.userId);
+
+  if (error) {
+    if (
+      error.message.includes("cover_image_url") ||
+      error.message.includes("schema cache")
+    ) {
+      return {
+        error:
+          "cover_image_url 컬럼이 없습니다. Supabase에 work cover 마이그레이션을 적용해 주세요."
+      };
+    }
+
+    return { error: error.message };
+  }
+
+  revalidatePath("/works");
+  revalidatePath(`/works/${workId}`);
+  return {
+    message: clearCover
+      ? "대표 이미지를 제거했습니다."
+      : "대표 이미지를 저장했습니다."
+  };
 }
 
 async function allocateRevealOrder(

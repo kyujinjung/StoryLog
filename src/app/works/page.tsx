@@ -17,11 +17,11 @@ const mediumLabels: Record<string, string> = {
 };
 
 const mediumAccent: Record<string, string> = {
-  book: "from-amber-600/40",
-  movie: "from-primary/50",
-  drama: "from-violet-600/40",
-  webtoon: "from-sky-600/40",
-  other: "from-zinc-500/40"
+  book: "from-amber-600/50",
+  movie: "from-primary/60",
+  drama: "from-violet-600/50",
+  webtoon: "from-sky-600/50",
+  other: "from-zinc-500/50"
 };
 
 export default async function WorksPage() {
@@ -44,7 +44,7 @@ export default async function WorksPage() {
           <p className="cinema-section-label">MY TICKETS</p>
           <h1 className="cinema-title mt-2 text-3xl sm:text-4xl">내 작품</h1>
           <p className="mt-2 text-muted-foreground">
-            예매한 상영작처럼 작품별 진행도와 회차를 관리합니다.
+            포스터와 함께 작품별 진행도를 한눈에 관리합니다.
           </p>
         </div>
         <Button asChild>
@@ -62,17 +62,18 @@ export default async function WorksPage() {
           </div>
           <h2 className="cinema-title mt-5 text-2xl">아직 상영 목록이 비어 있습니다</h2>
           <p className="mx-auto mt-2 max-w-md text-muted-foreground">
-            첫 작품을 등록하고 회차 티켓(진행도)을 만들어 보세요.
+            첫 작품을 등록하고 포스터·회차 티켓을 만들어 보세요.
           </p>
           <Button asChild className="mt-6">
             <Link href="/works/new">작품 만들기</Link>
           </Button>
         </div>
       ) : (
-        <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {works.map((work) => {
             const medium = work.medium ?? "other";
             const gradient = mediumAccent[medium] ?? mediumAccent.other;
+            const cover = work.cover_image_url;
 
             return (
               <Link
@@ -81,34 +82,40 @@ export default async function WorksPage() {
                 className="cinema-card cinema-card-hover group overflow-hidden rounded-2xl"
               >
                 <div
-                  className={`cinema-poster relative h-36 bg-gradient-to-br ${gradient} to-black`}
+                  className={`relative aspect-[2/3] overflow-hidden bg-gradient-to-br ${gradient} to-black`}
                 >
-                  <div className="relative z-10 flex h-full flex-col justify-between p-4">
-                    <span className="cinema-badge cinema-badge-solid w-fit text-[10px]">
+                  {cover ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={cover}
+                      alt={`${work.title} 포스터`}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : null}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 z-10 space-y-2 p-3">
+                    <span className="cinema-badge cinema-badge-solid text-[10px]">
                       {mediumLabels[medium] ?? "기타"}
                     </span>
-                    <p className="text-xs font-semibold tracking-wide text-white/80">
-                      {work.episodeCount} EPISODES
-                    </p>
+                    <h2 className="line-clamp-2 text-sm font-bold leading-snug text-white drop-shadow sm:text-base">
+                      {work.title}
+                    </h2>
+                    <div className="flex items-center justify-between gap-2 text-[11px] text-white/80">
+                      <span>{work.episodeCount}화</span>
+                      <span className="truncate font-semibold text-primary">
+                        {work.currentEpisode
+                          ? formatEpisodeLabel(work.currentEpisode)
+                          : work.progress
+                            ? "시작 전"
+                            : "미설정"}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-3 p-5">
-                  <h2 className="line-clamp-2 text-lg font-bold leading-snug group-hover:text-primary">
-                    {work.title}
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    {work.genre ? work.genre : "장르 미설정"}
-                  </p>
-                  <div className="flex items-center justify-between border-t border-white/5 pt-3 text-sm">
-                    <span className="text-muted-foreground">현재 위치</span>
-                    <span className="font-semibold text-primary">
-                      {work.currentEpisode
-                        ? formatEpisodeLabel(work.currentEpisode)
-                        : work.progress
-                          ? "시작 전"
-                          : "미설정"}
-                    </span>
-                  </div>
+                  {!cover ? (
+                    <div className="absolute inset-0 flex items-center justify-center opacity-30">
+                      <Clapperboard className="h-12 w-12 text-white" aria-hidden="true" />
+                    </div>
+                  ) : null}
                 </div>
               </Link>
             );

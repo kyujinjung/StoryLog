@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 
 import { createWork, type ActionState } from "@/app/works/actions";
+import { CoverFields } from "@/components/works/cover-fields";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,10 +14,19 @@ export function CreateWorkForm() {
   const [state, formAction, isPending] = useActionState(createWork, initialState);
 
   return (
-    <form action={formAction} className="cinema-card grid gap-5 rounded-2xl p-6 sm:p-8">
+    <form
+      action={formAction}
+      encType="multipart/form-data"
+      className="cinema-card grid gap-5 rounded-2xl p-6 sm:p-8"
+    >
       <div className="grid gap-2">
         <Label htmlFor="title">작품 제목</Label>
         <Input id="title" name="title" placeholder="예: 반지의 제왕" required />
+      </div>
+
+      <div className="grid gap-2">
+        <p className="text-sm font-semibold">대표 이미지 (선택)</p>
+        <CoverFields idPrefix="new-work" />
       </div>
 
       <div className="grid gap-2">

@@ -80,6 +80,14 @@ After creating a work and episodes, add plot notes in each episode's `줄거리 
 
 Add at least two characters on `/works/<work-id>`, set the work progress to an episode where both are revealed, then add an `인물 관계` record with a start/public episode. Open `/works/<work-id>/graph` to see the React Flow relationship graph; nodes and edges are filtered to the saved progress, and edges are dropped unless both endpoint characters are visible.
 
+## Work cover images
+
+Apply `supabase/migrations/20260812020000_work_cover_image.sql` to add `works.cover_image_url` and the public `work-covers` storage bucket.
+
+- Create work: optional file upload or image URL
+- Work detail: update/remove poster under **대표 이미지**
+- Works list: CGV-style poster grid using the cover
+
 ## Community lounge (Phase 2)
 
 Apply the Phase 2 migration (`supabase/migrations/20260812010000_phase2_community.sql`) in the Supabase SQL editor.

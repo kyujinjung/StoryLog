@@ -13,6 +13,7 @@ export type Work = {
   medium: string | null;
   genre: string | null;
   description: string | null;
+  cover_image_url: string | null;
   status: "watching" | "paused" | "completed" | "planned";
   metadata: Json;
   created_at: string;

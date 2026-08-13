@@ -8,6 +8,7 @@ import { RelationshipManager } from "@/components/relationships/relationship-man
 import { DeleteEpisodeButton } from "@/components/works/delete-episode-button";
 import { EpisodeForm } from "@/components/works/episode-form";
 import { ProgressForm } from "@/components/works/progress-form";
+import { WorkCoverForm } from "@/components/works/work-cover-form";
 import { Button } from "@/components/ui/button";
 import { hasXaiApiKey } from "@/lib/ai/xai";
 import { getNextRevealOrder, getWorkDetail } from "@/lib/data/storylog";
@@ -40,24 +41,45 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
   return (
     <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10">
       <div className="cinema-card overflow-hidden rounded-2xl">
-        <div className="cinema-poster relative min-h-[160px] bg-gradient-to-br from-primary/40 via-black to-black p-6 sm:p-8">
-          <div className="relative z-10 flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className="mb-3 -ml-2 text-white/80 hover:text-white"
-              >
-                <Link href="/works">← 상영 목록</Link>
-              </Button>
-              <p className="cinema-section-label">NOW WATCHING</p>
-              <h1 className="cinema-title mt-2 max-w-2xl text-3xl sm:text-4xl">
-                {work.title}
-              </h1>
-              <p className="mt-2 max-w-2xl leading-7 text-white/70">
-                {work.description || "작품 메모가 아직 없습니다."}
-              </p>
+        <div className="relative min-h-[200px] overflow-hidden bg-gradient-to-br from-primary/40 via-black to-black sm:min-h-[240px]">
+          {work.cover_image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={work.cover_image_url}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover opacity-45"
+            />
+          ) : null}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40" />
+          <div className="relative z-10 flex flex-wrap items-start justify-between gap-4 p-6 sm:p-8">
+            <div className="flex gap-4">
+              {work.cover_image_url ? (
+                <div className="hidden shrink-0 overflow-hidden rounded-xl border border-white/15 shadow-2xl sm:block sm:w-28 md:w-32">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={work.cover_image_url}
+                    alt={`${work.title} 포스터`}
+                    className="aspect-[2/3] h-auto w-full object-cover"
+                  />
+                </div>
+              ) : null}
+              <div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="mb-3 -ml-2 text-white/80 hover:text-white"
+                >
+                  <Link href="/works">← 상영 목록</Link>
+                </Button>
+                <p className="cinema-section-label">NOW WATCHING</p>
+                <h1 className="cinema-title mt-2 max-w-2xl text-3xl sm:text-4xl">
+                  {work.title}
+                </h1>
+                <p className="mt-2 max-w-2xl leading-7 text-white/70">
+                  {work.description || "작품 메모가 아직 없습니다."}
+                </p>
+              </div>
             </div>
             <div className="flex flex-col items-start gap-2 sm:items-end">
               <div className="cinema-badge cinema-badge-solid text-sm">
@@ -90,11 +112,17 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       </div>
 
       <section className="grid gap-5 lg:grid-cols-[0.85fr_1.15fr]">
-        <ProgressForm
-          workId={work.id}
-          episodes={work.episodes}
-          progress={work.progress}
-        />
+        <div className="grid gap-5">
+          <ProgressForm
+            workId={work.id}
+            episodes={work.episodes}
+            progress={work.progress}
+          />
+          <WorkCoverForm
+            workId={work.id}
+            coverImageUrl={work.cover_image_url}
+          />
+        </div>
 
         <div className="cinema-card rounded-2xl p-5">
           <p className="cinema-section-label">EPISODE</p>
