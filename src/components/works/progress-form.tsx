@@ -34,13 +34,17 @@ export function ProgressForm({ workId, episodes, progress }: ProgressFormProps) 
   return (
     <form
       action={formAction}
-      className="grid gap-3 rounded-lg border bg-card p-5"
+      className="cinema-card grid gap-3 rounded-2xl p-5"
       key={`progress-form-${workId}-${progress?.updated_at ?? "none"}-${savedEpisodeId || "unset"}`}
     >
       <input type="hidden" name="work_id" value={workId} />
+      <div>
+        <p className="cinema-section-label">TICKET</p>
+        <h2 className="mt-1 text-lg font-bold">현재 감상 위치</h2>
+      </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="episode_id">현재 감상 위치</Label>
+        <Label htmlFor="episode_id">회차 선택</Label>
         <select
           id="episode_id"
           name="episode_id"

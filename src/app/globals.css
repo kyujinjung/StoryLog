@@ -1,19 +1,23 @@
 @import "tailwindcss";
 
+/* CGV-inspired cinema dark theme */
 :root {
-  --background: 248 250 252;
-  --foreground: 15 23 42;
-  --card: 255 255 255;
-  --card-foreground: 15 23 42;
-  --primary: 20 83 45;
-  --primary-foreground: 248 250 252;
-  --secondary: 226 232 240;
-  --secondary-foreground: 15 23 42;
-  --muted: 241 245 249;
-  --muted-foreground: 71 85 105;
-  --border: 203 213 225;
-  --input: 203 213 225;
-  --ring: 20 83 45;
+  --background: 10 10 12;
+  --foreground: 245 245 247;
+  --card: 22 22 26;
+  --card-foreground: 245 245 247;
+  --primary: 231 26 15;
+  --primary-foreground: 255 255 255;
+  --secondary: 36 36 42;
+  --secondary-foreground: 245 245 247;
+  --muted: 28 28 34;
+  --muted-foreground: 161 161 170;
+  --border: 48 48 56;
+  --input: 48 48 56;
+  --ring: 231 26 15;
+  --accent-gold: 212 175 55;
+  --surface-elevated: 30 30 36;
+  --danger: 231 26 15;
 }
 
 @theme inline {
@@ -30,16 +34,144 @@
   --color-border: rgb(var(--border));
   --color-input: rgb(var(--input));
   --color-ring: rgb(var(--ring));
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 }
 
 * {
   border-color: rgb(var(--border));
 }
 
+html {
+  color-scheme: dark;
+}
+
 body {
   min-height: 100vh;
-  background: rgb(var(--background));
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(231, 26, 15, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(231, 26, 15, 0.08), transparent 40%),
+    rgb(var(--background));
   color: rgb(var(--foreground));
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(231, 26, 15, 0.35);
+  color: white;
+}
+
+/* Cinema utility surfaces */
+.cinema-shell {
+  position: relative;
+}
+
+.cinema-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(16px);
+}
+
+.cinema-header-accent {
+  height: 3px;
+  background: linear-gradient(90deg, #e71a0f 0%, #ff4d3d 40%, #e71a0f 100%);
+}
+
+.cinema-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(36, 36, 42, 0.95), rgba(22, 22, 26, 0.98));
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.cinema-card-hover {
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cinema-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(231, 26, 15, 0.45);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(231, 26, 15, 0.15);
+}
+
+.cinema-poster {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background:
+    linear-gradient(160deg, rgba(231, 26, 15, 0.35), transparent 50%),
+    linear-gradient(180deg, #2a2a32 0%, #121216 100%);
+}
+
+.cinema-poster::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.75) 100%);
+  pointer-events: none;
+}
+
+.cinema-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  background: rgba(231, 26, 15, 0.15);
+  border: 1px solid rgba(231, 26, 15, 0.4);
+  color: #ff8a80;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.cinema-badge-solid {
+  background: #e71a0f;
+  border-color: #e71a0f;
+  color: white;
+}
+
+.cinema-title {
+  font-family: var(--font-display), var(--font-body), sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+.cinema-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e71a0f;
+}
+
+/* Form controls in dark cinema UI */
+input,
+textarea,
+select {
+  color-scheme: dark;
+}
+
+textarea {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(var(--input));
+  background: rgb(var(--muted));
+  color: rgb(var(--foreground));
+}
+
+textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(var(--ring));
+}
+
+select {
+  border-radius: 0.75rem;
+  border: 1px solid rgb(var(--input));
+  background: rgb(var(--muted));
+  color: rgb(var(--foreground));
 }

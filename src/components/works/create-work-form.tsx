@@ -13,7 +13,7 @@ export function CreateWorkForm() {
   const [state, formAction, isPending] = useActionState(createWork, initialState);
 
   return (
-    <form action={formAction} className="grid gap-5 rounded-lg border bg-card p-6">
+    <form action={formAction} className="cinema-card grid gap-5 rounded-2xl p-6 sm:p-8">
       <div className="grid gap-2">
         <Label htmlFor="title">작품 제목</Label>
         <Input id="title" name="title" placeholder="예: 반지의 제왕" required />

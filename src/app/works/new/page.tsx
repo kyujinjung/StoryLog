@@ -22,7 +22,8 @@ export default async function NewWorkPage() {
     <div className="mx-auto grid max-w-3xl gap-6 px-4 py-10">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold">새 작품</h1>
+          <p className="cinema-section-label">NEW TITLE</p>
+          <h1 className="cinema-title mt-2 text-3xl">새 상영작</h1>
           <p className="mt-2 text-muted-foreground">
             스포일러 안전 기록의 기준이 되는 작품을 만듭니다.
           </p>

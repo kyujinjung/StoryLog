@@ -9,8 +9,9 @@ type AuthStateProps = {
 export function AuthState({ status }: AuthStateProps) {
   if (status === "missing-env") {
     return (
-      <div className="rounded-lg border bg-card p-6">
-        <h2 className="text-lg font-semibold">Supabase 설정이 필요합니다</h2>
+      <div className="cinema-card rounded-2xl p-6">
+        <p className="cinema-section-label">SETUP</p>
+        <h2 className="mt-2 text-lg font-bold">Supabase 설정이 필요합니다</h2>
         <p className="mt-2 leading-7 text-muted-foreground">
           `.env.local`에 `NEXT_PUBLIC_SUPABASE_URL`과
           `NEXT_PUBLIC_SUPABASE_ANON_KEY`를 설정한 뒤 개발 서버를 다시
@@ -21,8 +22,9 @@ export function AuthState({ status }: AuthStateProps) {
   }
 
   return (
-    <div className="rounded-lg border bg-card p-6">
-      <h2 className="text-lg font-semibold">로그인이 필요합니다</h2>
+    <div className="cinema-card rounded-2xl p-6">
+      <p className="cinema-section-label">MEMBER ONLY</p>
+      <h2 className="mt-2 text-lg font-bold">로그인이 필요합니다</h2>
       <p className="mt-2 leading-7 text-muted-foreground">
         작품과 진행도는 Supabase Auth 사용자별로 저장됩니다.
       </p>
