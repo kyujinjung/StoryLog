@@ -71,6 +71,24 @@ node --env-file=.env.local scripts/check-supabase.mjs
 
 ## B. Vercel 배포
 
+### Framework / Output Directory (중요)
+
+Next.js 앱이므로:
+
+| 설정 | 올바른 값 |
+|------|-----------|
+| **Framework Preset** | **Next.js** |
+| **Output Directory** | **비워 두기** (또는 기본값, `public` 넣지 말 것) |
+| **Build Command** | `npm run build` |
+| **Install Command** | `npm install` |
+
+`Output Directory = public` 이면  
+`No Output Directory named "public" found` 오류가 납니다.  
+repo에 `public/` 폴더와 `vercel.json`(`framework: nextjs`)을 넣어 두었습니다.
+
+Settings → General → **Build & Development Settings** 에서  
+Framework가 Next.js인지, Output Directory가 비어 있는지 확인하세요.
+
 ### 사전 조건
 
 - GitHub `main` 최신 푸시 완료
