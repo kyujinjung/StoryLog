@@ -3,7 +3,13 @@
 StoryLog is a spoiler-safe story memory app for long narratives. Phase 1 focuses on works, episodes, user progress, lore notes, character state, relationship changes, and reveal-order based visibility.
 
 **작업 진행사항:** [`docs/progress.md`](./docs/progress.md)  
-**기획 원본:** [`docs/app_idea.md`](./docs/app_idea.md)
+**기획 원본:** [`docs/app_idea.md`](./docs/app_idea.md)  
+**배포·마이그레이션:** [`docs/deploy.md`](./docs/deploy.md)
+
+```bash
+# Supabase 스키마 헬스체크
+npm run check:supabase
+```
 
 ## Run locally
 

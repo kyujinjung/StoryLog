@@ -178,11 +178,13 @@ npm run dev
 
 | 우선 | 항목 | 상태 |
 |------|------|------|
-| 1 | Supabase 마이그레이션 3종 프로덕션 적용 확인 | 운영자 작업 |
-| 2 | Vercel 배포 + 환경 변수 | 미착수 |
+| 1 | Supabase 마이그레이션 3종 프로덕션 적용 확인 | **점검 완료 → Phase2·커버 미적용**. `docs/deploy.md` + `APPLY_PENDING_phase2_and_cover.sql` 참고 |
+| 2 | Vercel 배포 + 환경 변수 | **가이드 작성** (`docs/deploy.md`). CLI 로그인/대시보드 배포는 운영자 실행 |
 | 3 | 라운지 신고/운영, 닉네임 표시 | 미착수 |
 | 4 | 자연어 검색(기획 6.2) | 미착수 |
 | 5 | React Native 모바일 확장 | 장기 |
+
+헬스체크: `node --env-file=.env.local scripts/check-supabase.mjs`
 
 ---
 
