@@ -45,14 +45,81 @@ async function probe(label, path) {
 }
 
 async function probeBucket(name) {
-  const res = await fetch(`${url}/storage/v1/bucket/${name}`, { headers });
+  // GET /bucket/{id} often 404s for anon even when the bucket exists.
+  // Probing a missing public object is more reliable:
+  // - NoSuchKey / Object not found → bucket exists (public)
+  // - NoSuchBucket → bucket missing
+  // - InvalidMimeType on upload also implies the bucket exists
+  const res = await fetch(
+    `${url}/storage/v1/object/public/${name}/__storylog_probe__.jpg`,
+    { headers }
+  );
   const body = await res.text();
-  const ok = res.status === 200;
+
+  if (body.includes("NoSuchKey") || body.includes("Object not found") || body.includes("not_found")) {
+    return {
+      label: `storage:${name}`,
+      status: res.status,
+      ok: true,
+      note: "ok (bucket reachable via public object API)"
+    };
+  }
+
+  if (body.includes("NoSuchBucket") || body.includes("Bucket not found")) {
+    // Fallback: authenticated upload probe (bucket may be private)
+    const up = await fetch(`${url}/storage/v1/object/${name}/__storylog_probe__.jpg`, {
+      method: "POST",
+      headers: {
+        ...headers,
+        "Content-Type": "image/jpeg",
+        "x-upsert": "true"
+      },
+      body: Buffer.alloc(0)
+    });
+    const upBody = await up.text();
+
+    if (
+      upBody.includes("InvalidMimeType") ||
+      upBody.includes("Unauthorized") ||
+      upBody.includes("new row violates") ||
+      upBody.includes("row-level security") ||
+      up.status === 200 ||
+      up.status === 400
+    ) {
+      // 400 without NoSuchBucket usually means bucket exists but policy/auth blocked
+      if (!upBody.includes("NoSuchBucket") && !upBody.includes("Bucket not found")) {
+        return {
+          label: `storage:${name}`,
+          status: up.status,
+          ok: true,
+          note: "ok (bucket exists; set Public ON for open reads if needed)"
+        };
+      }
+    }
+
+    return {
+      label: `storage:${name}`,
+      status: res.status,
+      ok: false,
+      note: body.slice(0, 160)
+    };
+  }
+
+  // 200 would mean a probe object exists (unexpected but fine)
+  if (res.status === 200) {
+    return {
+      label: `storage:${name}`,
+      status: res.status,
+      ok: true,
+      note: "ok"
+    };
+  }
+
   return {
     label: `storage:${name}`,
     status: res.status,
-    ok,
-    note: ok ? "ok" : body.slice(0, 160)
+    ok: false,
+    note: body.slice(0, 160)
   };
 }
 
