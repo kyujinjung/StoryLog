@@ -88,7 +88,22 @@ if (failed === 0) {
 }
 
 console.log(`\n${failed} check(s) failed.`);
-console.log("Apply pending SQL:");
-console.log("  supabase/migrations/APPLY_PENDING_phase2_and_cover.sql");
-console.log("in Supabase Dashboard → SQL Editor → Run");
+
+const onlyStorage =
+  failed === 1 && checks.some((c) => c.label === "storage:work-covers" && !c.ok);
+
+if (onlyStorage) {
+  console.log("\nOnly the Storage bucket is missing. Create it in the Dashboard:");
+  console.log("  1. Supabase → Storage → New bucket");
+  console.log("  2. Name: work-covers");
+  console.log("  3. Public bucket: ON");
+  console.log("  4. Create");
+  console.log("  5. SQL Editor → run APPLY_STORAGE_policies_only.sql");
+  console.log("Then re-run: npm run check:supabase");
+} else {
+  console.log("Apply pending SQL:");
+  console.log("  supabase/migrations/APPLY_PENDING_phase2_and_cover.sql");
+  console.log("in Supabase Dashboard → SQL Editor → Run");
+}
+
 process.exit(1);

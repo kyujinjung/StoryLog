@@ -35,25 +35,26 @@ node --env-file=.env.local scripts/check-supabase.mjs
 
 ### Storage 버킷만 실패할 때 (`work-covers` 404)
 
-테이블/컬럼은 OK인데 버킷만 없으면:
+테이블/컬럼은 OK인데 버킷만 없으면 — **대시보드 생성이 더 확실**합니다.
+(일부 프로젝트는 SQL로 `storage.buckets` insert가 막혀 있습니다.)
 
-**방법 A — SQL**
+**방법 B — 대시보드 (권장)**
+
+1. https://supabase.com/dashboard/project/yblsvtjcutfpxlsjkfgj/storage/buckets  
+2. **New bucket**  
+3. 설정:
+   - **Name:** `work-covers` (철자 정확히)
+   - **Public bucket:** **ON** (토글)
+   - File size limit: 5 MB (선택)
+   - Allowed MIME: image/* (선택)
+4. **Create bucket**  
+5. 목록에 `work-covers`가 보이는지 확인  
+6. SQL Editor에서 `supabase/migrations/APPLY_STORAGE_policies_only.sql` 실행 (업로드 RLS)  
+7. `npm run check:supabase`
+
+**방법 A — SQL (막히면 B로)**
 
 `supabase/migrations/APPLY_STORAGE_work_covers_only.sql` 실행
-
-**방법 B — 대시보드 (더 확실)**
-
-1. Supabase → **Storage** → **New bucket**  
-2. Name: `work-covers`  
-3. **Public bucket** 켜기  
-4. Create  
-5. **Policies** → 아래 정책 추가 (또는 SQL 파일의 policy 부분만 실행)
-
-그다음 다시:
-
-```bash
-npm run check:supabase
-```
 
 ### Auth URL (로컬 + 배포 후)
 
