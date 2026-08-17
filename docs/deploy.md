@@ -33,6 +33,28 @@ node --env-file=.env.local scripts/check-supabase.mjs
 
 모두 `yes` 이면 마이그레이션 완료.
 
+### Storage 버킷만 실패할 때 (`work-covers` 404)
+
+테이블/컬럼은 OK인데 버킷만 없으면:
+
+**방법 A — SQL**
+
+`supabase/migrations/APPLY_STORAGE_work_covers_only.sql` 실행
+
+**방법 B — 대시보드 (더 확실)**
+
+1. Supabase → **Storage** → **New bucket**  
+2. Name: `work-covers`  
+3. **Public bucket** 켜기  
+4. Create  
+5. **Policies** → 아래 정책 추가 (또는 SQL 파일의 policy 부분만 실행)
+
+그다음 다시:
+
+```bash
+npm run check:supabase
+```
+
 ### Auth URL (로컬 + 배포 후)
 
 **Authentication → URL Configuration**
