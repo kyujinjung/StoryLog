@@ -16,7 +16,6 @@ export function CreateWorkForm() {
   return (
     <form
       action={formAction}
-      encType="multipart/form-data"
       className="cinema-card grid gap-5 rounded-2xl p-6 sm:p-8"
     >
       <div className="grid gap-2">

@@ -18,11 +18,7 @@ export function WorkCoverForm({
   const [state, action, isPending] = useActionState(updateWorkCover, initialState);
 
   return (
-    <form
-      action={action}
-      encType="multipart/form-data"
-      className="cinema-card grid gap-4 rounded-2xl p-5"
-    >
+    <form action={action} className="cinema-card grid gap-4 rounded-2xl p-5">
       <input type="hidden" name="work_id" value={workId} />
       <div>
         <p className="cinema-section-label">POSTER</p>
