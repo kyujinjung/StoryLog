@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Black_Han_Sans, Noto_Sans_KR } from "next/font/google";
-import { Clapperboard, LogIn, Ticket } from "lucide-react";
+import { Clapperboard, Ticket } from "lucide-react";
 
 import "./globals.css";
 import "@xyflow/react/dist/style.css";
+import { AuthControls } from "@/components/layout/auth-controls";
 import { BottomNav } from "@/components/layout/bottom-nav";
 import { Button } from "@/components/ui/button";
+import { createClient, hasSupabaseEnv } from "@/lib/supabase/server";
 
 const bodyFont = Noto_Sans_KR({
   subsets: ["latin"],
@@ -27,11 +29,37 @@ export const metadata: Metadata = {
   description: "Spoiler-safe story memory notes for long narratives."
 };
 
-export default function RootLayout({
+async function getHeaderAuth() {
+  if (!hasSupabaseEnv()) {
+    return { isLoggedIn: false as const, email: null as string | null };
+  }
+
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return { isLoggedIn: false as const, email: null as string | null };
+    }
+
+    return {
+      isLoggedIn: true as const,
+      email: user.email ?? null
+    };
+  } catch {
+    return { isLoggedIn: false as const, email: null as string | null };
+  }
+}
+
+export default async function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const auth = await getHeaderAuth();
+
   return (
     <html lang="ko" className={`${bodyFont.variable} ${displayFont.variable}`}>
       <body className={bodyFont.className}>
@@ -53,16 +81,17 @@ export default function RootLayout({
                 </Button>
                 <Button asChild variant="ghost" size="sm">
                   <Link href="/works" className="gap-1.5">
-                    <Ticket className="hidden h-4 w-4 sm:inline" aria-hidden="true" />
+                    <Ticket
+                      className="hidden h-4 w-4 sm:inline"
+                      aria-hidden="true"
+                    />
                     내 작품
                   </Link>
                 </Button>
-                <Button asChild size="sm">
-                  <Link href="/login">
-                    <LogIn className="h-4 w-4" aria-hidden="true" />
-                    로그인
-                  </Link>
-                </Button>
+                <AuthControls
+                  isLoggedIn={auth.isLoggedIn}
+                  email={auth.email}
+                />
               </div>
             </nav>
           </header>
@@ -70,7 +99,7 @@ export default function RootLayout({
           <footer className="hidden border-t border-white/5 py-8 text-center text-xs text-muted-foreground sm:block sm:pb-28">
             StoryLog · 스포일러 없는 시네마 메모리
           </footer>
-          <BottomNav />
+          <BottomNav isLoggedIn={auth.isLoggedIn} />
         </div>
       </body>
     </html>

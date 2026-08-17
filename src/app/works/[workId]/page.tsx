@@ -21,6 +21,10 @@ type WorkDetailPageProps = {
   }>;
 };
 
+// Always fetch fresh work/episodes after mutations (createEpisode, progress, etc.)
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
   const { workId } = await params;
   const work = await getWorkDetail(workId);

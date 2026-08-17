@@ -391,16 +391,20 @@ export async function createEpisode(
   const normalizedLabel =
     episodeLabel || (episodeNumber !== null ? `${episodeNumber}화` : "");
 
-  const { error } = await state.supabase.from("episodes").insert({
-    user_id: state.userId,
-    work_id: workId,
-    season_label: seasonLabel || null,
-    episode_label: normalizedLabel,
-    episode_number: episodeNumber,
-    reveal_order: allocated.reveal_order,
-    title: title || null,
-    summary: summary || null
-  });
+  const { data: created, error } = await state.supabase
+    .from("episodes")
+    .insert({
+      user_id: state.userId,
+      work_id: workId,
+      season_label: seasonLabel || null,
+      episode_label: normalizedLabel,
+      episode_number: episodeNumber,
+      reveal_order: allocated.reveal_order,
+      title: title || null,
+      summary: summary || null
+    })
+    .select("id,episode_label,reveal_order")
+    .single();
 
   if (error) {
     if (error.message.includes("episodes_work_id_reveal_order_key")) {
@@ -413,9 +417,27 @@ export async function createEpisode(
     return { error: error.message };
   }
 
+  if (!created) {
+    return { error: "회차 저장 결과를 확인하지 못했습니다. 새로고침 후 확인해 주세요." };
+  }
+
+  // Bump parent work so list order refreshes and caches invalidate.
+  await state.supabase
+    .from("works")
+    .update({ updated_at: new Date().toISOString() })
+    .eq("id", workId)
+    .eq("user_id", state.userId);
+
   revalidatePath("/works");
   revalidatePath(`/works/${workId}`);
-  return {};
+  revalidatePath(`/works/${workId}`, "layout");
+  revalidatePath(`/works/${workId}/review`);
+  revalidatePath(`/works/${workId}/graph`);
+  revalidatePath(`/works/${workId}/lounge`);
+
+  return {
+    message: `회차 「${created.episode_label as string}」을(를) 추가했습니다. (스포 순서 ${created.reveal_order as number})`
+  };
 }
 
 export async function updateEpisode(
@@ -521,10 +543,12 @@ export async function updateEpisode(
     .eq("user_id", state.userId)
     .eq("episode_id", episodeId);
 
+  revalidatePath("/works");
   revalidatePath(`/works/${workId}`);
+  revalidatePath(`/works/${workId}`, "layout");
   revalidatePath(`/works/${workId}/review`);
   revalidatePath(`/works/${workId}/graph`);
-  return {};
+  return { message: "회차를 수정했습니다." };
 }
 
 export async function deleteEpisode(formData: FormData) {

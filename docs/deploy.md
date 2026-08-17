@@ -67,6 +67,12 @@ node --env-file=.env.local scripts/check-supabase.mjs
 
 여러 개를 동시에 등록해도 됩니다.
 
+**중요:** Redirect URL은 경로까지 일치해야 합니다.  
+`/auth/callback` 이 빠지면 매직 링크 클릭 후 로그인이 안 됩니다.
+
+앱 코드는 세션 쿠키를 콜백 응답에 심고, `middleware`로 세션을 갱신합니다.
+로그인 실패 시 `/login?error=...&message=...` 로 사유가 표시됩니다.
+
 ---
 
 ## B. Vercel 배포

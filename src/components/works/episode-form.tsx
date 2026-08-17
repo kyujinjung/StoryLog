@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   createEpisode,
@@ -25,11 +26,13 @@ export function EpisodeForm({
   episode,
   nextRevealOrder = 1
 }: EpisodeFormProps) {
+  const router = useRouter();
   const action = episode ? updateEpisode : createEpisode;
   const [state, formAction, isPending] = useActionState(action, initialState);
+  const [formNonce, setFormNonce] = useState(0);
   const formKey = episode
     ? `edit-${episode.id}-${episode.updated_at}`
-    : `new-${workId}-${nextRevealOrder}`;
+    : `new-${workId}-${nextRevealOrder}-${formNonce}`;
   const [revealOrder, setRevealOrder] = useState(
     String(episode?.reveal_order ?? nextRevealOrder)
   );
@@ -43,6 +46,21 @@ export function EpisodeForm({
     }
   }, [episode, nextRevealOrder]);
 
+  // After successful create/update, refresh server components so the schedule appears.
+  useEffect(() => {
+    if (!state.message) {
+      return;
+    }
+
+    router.refresh();
+
+    if (!episode) {
+      setEpisodeNumber("");
+      setRevealOrder(String(nextRevealOrder + 1));
+      setFormNonce((value) => value + 1);
+    }
+  }, [state.message, episode, nextRevealOrder, router]);
+
   return (
     <form key={formKey} action={formAction} className="grid gap-3">
       <input type="hidden" name="work_id" value={workId} />
@@ -50,18 +68,22 @@ export function EpisodeForm({
 
       <div className="grid gap-3 sm:grid-cols-[1fr_0.8fr_1fr_1fr]">
         <div className="grid gap-1.5">
-          <Label htmlFor={`season-${episode?.id ?? "new"}`}>시즌/권</Label>
+          <Label htmlFor={`season-${episode?.id ?? "new"}-${formNonce}`}>
+            시즌/권
+          </Label>
           <Input
-            id={`season-${episode?.id ?? "new"}`}
+            id={`season-${episode?.id ?? "new"}-${formNonce}`}
             name="season_label"
             defaultValue={episode?.season_label ?? ""}
             placeholder="시즌 1"
           />
         </div>
         <div className="grid gap-1.5">
-          <Label htmlFor={`number-${episode?.id ?? "new"}`}>회차 번호</Label>
+          <Label htmlFor={`number-${episode?.id ?? "new"}-${formNonce}`}>
+            회차 번호
+          </Label>
           <Input
-            id={`number-${episode?.id ?? "new"}`}
+            id={`number-${episode?.id ?? "new"}-${formNonce}`}
             name="episode_number"
             type="number"
             step="1"
@@ -79,18 +101,22 @@ export function EpisodeForm({
           />
         </div>
         <div className="grid gap-1.5">
-          <Label htmlFor={`label-${episode?.id ?? "new"}`}>회차 라벨</Label>
+          <Label htmlFor={`label-${episode?.id ?? "new"}-${formNonce}`}>
+            회차 라벨
+          </Label>
           <Input
-            id={`label-${episode?.id ?? "new"}`}
+            id={`label-${episode?.id ?? "new"}-${formNonce}`}
             name="episode_label"
             defaultValue={episode?.episode_label ?? ""}
             placeholder="1화"
           />
         </div>
         <div className="grid gap-1.5">
-          <Label htmlFor={`reveal-${episode?.id ?? "new"}`}>스포 순서</Label>
+          <Label htmlFor={`reveal-${episode?.id ?? "new"}-${formNonce}`}>
+            스포 순서
+          </Label>
           <Input
-            id={`reveal-${episode?.id ?? "new"}`}
+            id={`reveal-${episode?.id ?? "new"}-${formNonce}`}
             name="reveal_order"
             type="number"
             step="1"
@@ -108,9 +134,11 @@ export function EpisodeForm({
       </div>
 
       <div className="grid gap-1.5">
-        <Label htmlFor={`title-${episode?.id ?? "new"}`}>회차 제목</Label>
+        <Label htmlFor={`title-${episode?.id ?? "new"}-${formNonce}`}>
+          회차 제목
+        </Label>
         <Input
-          id={`title-${episode?.id ?? "new"}`}
+          id={`title-${episode?.id ?? "new"}-${formNonce}`}
           name="title"
           defaultValue={episode?.title ?? ""}
           placeholder="선택 사항"
@@ -118,12 +146,14 @@ export function EpisodeForm({
       </div>
 
       <div className="grid gap-1.5">
-        <Label htmlFor={`summary-${episode?.id ?? "new"}`}>줄거리 메모</Label>
+        <Label htmlFor={`summary-${episode?.id ?? "new"}-${formNonce}`}>
+          줄거리 메모
+        </Label>
         <textarea
-          id={`summary-${episode?.id ?? "new"}`}
+          id={`summary-${episode?.id ?? "new"}-${formNonce}`}
           name="summary"
           rows={3}
-          className="rounded-md border bg-background px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+          className="rounded-md border border-white/10 bg-muted px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
           defaultValue={episode?.summary ?? ""}
           placeholder="이 회차에서 기억할 핵심 줄거리나 감상 전 복습 메모"
         />
@@ -135,7 +165,17 @@ export function EpisodeForm({
         </p>
       ) : null}
 
-      <Button type="submit" variant={episode ? "secondary" : "default"} disabled={isPending}>
+      {state.message ? (
+        <p className="rounded-md bg-secondary p-3 text-sm text-secondary-foreground">
+          {state.message}
+        </p>
+      ) : null}
+
+      <Button
+        type="submit"
+        variant={episode ? "secondary" : "default"}
+        disabled={isPending}
+      >
         {isPending ? "저장 중" : episode ? "회차 수정" : "회차 추가"}
       </Button>
     </form>

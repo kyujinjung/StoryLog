@@ -1,8 +1,8 @@
 "use client";
 
 import type * as React from "react";
-import { useActionState } from "react";
-import { ShieldCheck, Trash2 } from "lucide-react";
+import { useActionState, useState } from "react";
+import { ChevronDown, ShieldCheck, Trash2 } from "lucide-react";
 
 import {
   createCharacter,
@@ -71,7 +71,7 @@ function RevealSelect({
       id={id}
       name="reveal_episode_id"
       defaultValue={defaultValue ?? ""}
-      className="h-10 rounded-md border bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="h-9 w-full rounded-md border border-white/10 bg-muted px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
       required
     >
       <option value="" disabled>
@@ -275,74 +275,171 @@ function CharacterStateForm({
 function EventForm({
   workId,
   episodes,
-  event
+  event,
+  compact = false
 }: {
   workId: string;
   episodes: Episode[];
   event?: Event;
+  compact?: boolean;
 }) {
   const action = event ? updateEvent : createEvent;
   const [state, formAction, isPending] = useActionState(action, initialState);
+  const id = event?.id ?? "new";
 
+  // 2×2 그리드: 인물 옆 반폭 컬럼에서도 4열이 한 줄로 찌그러지거나
+  // 세로로 늘어지지 않도록 고정 높이 필드만 사용
   return (
-    <form action={formAction} className="grid gap-3">
+    <form action={formAction} className="grid h-fit auto-rows-min gap-2 content-start">
       <input type="hidden" name="work_id" value={workId} />
       {event ? <input type="hidden" name="event_id" value={event.id} /> : null}
-      <div className="grid gap-3 sm:grid-cols-[1fr_0.8fr_0.6fr]">
-        <div className="grid gap-1.5">
-          <Label htmlFor={`event-title-${event?.id ?? "new"}`}>사건</Label>
+
+      <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2">
+        <div className="grid gap-1 content-start">
+          <Label htmlFor={`event-title-${id}`} className="text-xs">
+            사건
+          </Label>
           <Input
-            id={`event-title-${event?.id ?? "new"}`}
+            id={`event-title-${id}`}
             name="title"
             defaultValue={event?.title ?? ""}
+            placeholder="사건 제목"
             required
+            className="h-9"
           />
         </div>
-        <div className="grid gap-1.5">
-          <Label htmlFor={`event-type-${event?.id ?? "new"}`}>유형</Label>
+        <div className="grid gap-1 content-start">
+          <Label htmlFor={`event-type-${id}`} className="text-xs">
+            유형
+          </Label>
           <Input
-            id={`event-type-${event?.id ?? "new"}`}
+            id={`event-type-${id}`}
             name="event_type"
             defaultValue={event?.event_type ?? ""}
             placeholder="전투, 단서"
+            className="h-9"
           />
         </div>
-        <div className="grid gap-1.5">
-          <Label htmlFor={`event-importance-${event?.id ?? "new"}`}>중요도</Label>
+        <div className="grid gap-1 content-start">
+          <Label htmlFor={`event-importance-${id}`} className="text-xs">
+            중요도 (1–5)
+          </Label>
           <Input
-            id={`event-importance-${event?.id ?? "new"}`}
+            id={`event-importance-${id}`}
             name="importance"
             type="number"
             min="1"
             max="5"
             defaultValue={event?.importance ?? 3}
+            className="h-9"
           />
         </div>
-      </div>
-      <div className="grid gap-3 sm:grid-cols-[0.8fr_1.2fr]">
-        <div className="grid gap-1.5">
-          <Label htmlFor={`event-reveal-${event?.id ?? "new"}`}>공개 회차</Label>
+        <div className="grid gap-1 content-start">
+          <Label htmlFor={`event-reveal-${id}`} className="text-xs">
+            공개 회차
+          </Label>
           <RevealSelect
-            id={`event-reveal-${event?.id ?? "new"}`}
+            id={`event-reveal-${id}`}
             episodes={episodes}
             defaultValue={event?.reveal_episode_id}
           />
         </div>
-        <div className="grid gap-1.5">
-          <Label htmlFor={`event-summary-${event?.id ?? "new"}`}>요약</Label>
+      </div>
+
+      <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-[1fr_auto] min-[420px]:items-end">
+        <div className="grid gap-1 content-start">
+          <Label htmlFor={`event-summary-${id}`} className="text-xs">
+            요약
+          </Label>
           <Input
-            id={`event-summary-${event?.id ?? "new"}`}
+            id={`event-summary-${id}`}
             name="summary"
             defaultValue={event?.summary ?? ""}
+            placeholder="한 줄 요약"
             required
+            className="h-9"
           />
         </div>
+        <Button
+          type="submit"
+          size="sm"
+          className="h-9 w-full shrink-0 min-[420px]:w-auto"
+          disabled={isPending || episodes.length === 0}
+        >
+          {isPending ? "저장 중" : event ? "수정" : "사건 추가"}
+        </Button>
       </div>
+
       <ErrorMessage error={state.error} />
-      <Button type="submit" disabled={isPending || episodes.length === 0}>
-        {isPending ? "저장 중" : event ? "사건 수정" : "사건 추가"}
-      </Button>
     </form>
+  );
+}
+
+function EventListItem({
+  workId,
+  episodes,
+  event
+}: {
+  workId: string;
+  episodes: Episode[];
+  event: Event;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <article className="rounded-xl border border-white/10 bg-muted/30">
+      <div className="flex items-start gap-2 p-3">
+        <button
+          type="button"
+          className="min-w-0 flex-1 text-left"
+          onClick={() => setOpen((value) => !value)}
+          aria-expanded={open}
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <h4 className="font-semibold">{event.title}</h4>
+            {event.event_type ? (
+              <span className="rounded-md bg-secondary px-1.5 py-0.5 text-[10px] text-muted-foreground">
+                {event.event_type}
+              </span>
+            ) : null}
+          </div>
+          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+            {event.summary}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            중요도 {event.importance} · 공개 순서 {event.reveal_order}
+          </p>
+        </button>
+        <div className="flex shrink-0 items-center gap-0.5">
+          <DeleteButton
+            action={deleteEvent}
+            fields={{ work_id: workId, event_id: event.id }}
+            label="사건 삭제"
+          />
+          <button
+            type="button"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-white/5 hover:text-foreground"
+            onClick={() => setOpen((value) => !value)}
+            aria-label={open ? "수정 접기" : "수정 펼치기"}
+          >
+            <ChevronDown
+              className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+      </div>
+      {open ? (
+        <div className="border-t border-white/10 p-3">
+          <EventForm
+            workId={workId}
+            episodes={episodes}
+            event={event}
+            compact
+          />
+        </div>
+      ) : null}
+    </article>
   );
 }
 
@@ -517,7 +614,8 @@ export function LorePanels({
         ) : null}
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-2">
+      {/* items-start: 인물 패널이 길어도 사건 패널 높이를 끌어올리지 않음 */}
+      <div className="grid items-start gap-6 xl:grid-cols-2">
         <section className="grid gap-4 rounded-lg border bg-card p-5">
           <h3 className="text-lg font-semibold">인물</h3>
           <CharacterForm workId={workId} episodes={episodes} />
@@ -581,40 +679,37 @@ export function LorePanels({
           )}
         </section>
 
-        <section className="grid gap-4 rounded-lg border bg-card p-5">
-          <h3 className="text-lg font-semibold">사건</h3>
-          <EventForm workId={workId} episodes={episodes} />
+        <section className="cinema-card grid h-fit gap-3 self-start rounded-2xl p-5">
+          <div>
+            <h3 className="text-lg font-semibold">사건</h3>
+            <p className="text-xs text-muted-foreground">
+              2열 압축 폼 · 기존 사건은 탭해서 수정
+            </p>
+          </div>
+          <div className="h-fit rounded-xl border border-white/10 bg-background/40 p-3">
+            <EventForm workId={workId} episodes={episodes} />
+          </div>
           {lore.events.length === 0 ? (
-            <p className="rounded-md bg-muted p-4 text-sm text-muted-foreground">
+            <p className="rounded-md bg-muted p-3 text-sm text-muted-foreground">
               현재 진행도에서 볼 수 있는 사건이 없습니다.
             </p>
           ) : (
-            <div className="grid gap-4">
+            <div className="grid gap-2">
               {lore.events.map((event) => (
-                <article key={event.id} className="rounded-md border p-4">
-                  <div className="mb-3 flex items-start justify-between gap-3">
-                    <div>
-                      <h4 className="font-semibold">{event.title}</h4>
-                      <p className="text-xs text-muted-foreground">
-                        중요도 {event.importance} · 공개 순서 {event.reveal_order}
-                      </p>
-                    </div>
-                    <DeleteButton
-                      action={deleteEvent}
-                      fields={{ work_id: workId, event_id: event.id }}
-                      label="사건 삭제"
-                    />
-                  </div>
-                  <EventForm workId={workId} episodes={episodes} event={event} />
-                </article>
+                <EventListItem
+                  key={event.id}
+                  workId={workId}
+                  episodes={episodes}
+                  event={event}
+                />
               ))}
             </div>
           )}
         </section>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-2">
-        <section className="grid gap-4 rounded-lg border bg-card p-5">
+      <div className="grid items-start gap-6 xl:grid-cols-2">
+        <section className="grid h-fit gap-4 self-start rounded-lg border bg-card p-5">
           <h3 className="text-lg font-semibold">용어</h3>
           <TermForm workId={workId} episodes={episodes} />
           {lore.terms.length === 0 ? (
@@ -645,7 +740,7 @@ export function LorePanels({
           )}
         </section>
 
-        <section className="grid gap-4 rounded-lg border bg-card p-5">
+        <section className="grid h-fit gap-4 self-start rounded-lg border bg-card p-5">
           <h3 className="text-lg font-semibold">메모</h3>
           <NoteForm workId={workId} episodes={episodes} />
           {lore.notes.length === 0 ? (
