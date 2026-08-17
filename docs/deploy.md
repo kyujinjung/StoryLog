@@ -14,7 +14,9 @@
 1. [Supabase SQL Editor](https://supabase.com/dashboard/project/yblsvtjcutfpxlsjkfgj/sql/new) 열기  
 2. 아래 파일 **전체** 붙여넣기 후 **Run**  
    - `supabase/migrations/APPLY_PENDING_phase2_and_cover.sql`  
-   - (Phase 2 라운지 + 커버 컬럼 + storage 버킷 한 번에)
+   - (Phase 2 라운지 + 커버 컬럼 + storage 버킷 한 번에)  
+   - **Phase 1 foundation SQL은 다시 실행하지 마세요.**  
+     (`work_status already exists` 는 Phase 1을 재실행했을 때 나는 정상 오류입니다.)
 3. 로컬에서 검증:
 
 ```bash
